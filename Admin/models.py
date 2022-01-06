@@ -14,3 +14,5 @@ class LoginModel(models.Model):
 
     class Meta:
         db_table = "skroman_login"
+
+# 
