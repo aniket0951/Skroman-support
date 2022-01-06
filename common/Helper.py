@@ -15,18 +15,10 @@ def IsValidParam(param, request):
     else:
         return exceptions.NotFound("Please provide a validate param")
 
-def SendOTP(email,request):
-    otp = generateOTP()
+def SendOTP(email,request, otp):
     htmlgen = f"Your verification code is {otp}"
     send = send_mail('OTP request',otp,email,[email], fail_silently=False, html_message=htmlgen)
     if send:
-        return True
+        return True, otp
     else:
         return False
-
-def generateOTP() :
-     digits = "0123456789"
-     OTP = ""
-     for i in range(4) :
-         OTP += digits[math.floor(random.random() * 10)]
-     return OTP

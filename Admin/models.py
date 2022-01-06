@@ -10,6 +10,7 @@ class LoginModel(models.Model):
     employee_id = models.CharField(max_length=120, null=True, blank=True)
     contact_no = models.CharField(max_length=120, null=True, blank=True)
     auth_token = models.CharField(max_length=120, null=True, blank=True)
+    user_otp = models.CharField(max_length=60, null=True, blank=True)
     status = models.CharField(max_length=120, null=True, blank=True)
 
     class Meta:
