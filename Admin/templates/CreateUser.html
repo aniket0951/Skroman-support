@@ -1,0 +1,443 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cretae User</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/DriverReq.css' %}" />
+    <link rel="stylesheet" href="/static/css/DriverReq.css">
+    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
+    <link href="path/to/lightbox.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="path/to/lightbox.js"></script>
+    
+</head>
+
+<body style="overflow-y: scroll;">
+    <!-- side-bar -->
+    <div class="sidebar" id="main">
+        <div class="logo_content">
+            <div class="logo">
+                <i class="bx bxl-android"></i>
+                <div class="logo_name">Skroman</div>
+            </div>
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+
+        <ul class="nav_list">
+
+            <li>
+                <a href="#">
+                    <i class='bx bxs-user-plus'></i>
+                    <span class="links_name">Create User</span>
+                </a>
+                <span class="tooltip">Create User</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="bx bx-restaurant"></i>
+                    <span class="links_name">Leads</span>
+                </a>
+                <span class="tooltip">Leads</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class='bx bxs-search'></i>
+                    <span class="links_name">Track</span>
+                </a>
+                <span class="tooltip">Track</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="bx bx-cog"></i>
+                    <span class="links_name">Sales</span>
+                </a>
+                <span class="tooltip">Sales</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="bx bxs-help-circle"></i>
+                    <span class="links_name">Invantory</span>
+                </a>
+                <span class="tooltip">Invantory</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="bx bxs-help-circle"></i>
+                    <span class="links_name">Production</span>
+                </a>
+                <span class="tooltip">Production</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="bx bxs-help-circle"></i>
+                    <span class="links_name">Account</span>
+                </a>
+                <span class="tooltip">Account</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="bx bxs-help-circle"></i>
+                    <span class="links_name">Installation</span>
+                </a>
+                <span class="tooltip">Installation</span>
+            </li>
+
+        </ul>
+
+        <div class="profile_content">
+            <div class="profile">
+                <div class="profile_details">
+                    <img src="" alt="" />
+                    <div class="name_job">
+                        <div class="name">Aniket Suryawanshi</div>
+                        <div class="job">Android Developer</div>
+                    </div>
+                </div>
+                <i class="bx bx-log-out" id="log_out"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- navigation bar -->
+    <div class="navigation_bar">
+        <nav class="navbar">
+            <div class="container-fluid" id="navigation_div">
+                <a class="navbar-brand">Skroman Support</a>
+                <i class="bx bx-menu"></i>
+                <a style="text-decoration: none;" class="nanbar-user">Aniket Suryawanshi</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- user list parent div  -->
+    <div class="row userparent">
+        <div class="child1">
+            <h1></h1>
+            <a href="" style="text-decoration:none" class="btn addNewBtn" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+                <p id="rcorners1" style="background-color: blue;" class="button" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add New User</p>
+            </a>
+        </div>
+    </div>
+
+    <section class="parenttab" style="visibility: hidden;">
+        <div class="">
+            <ul class="nav nav-pills option_tab" id="myTab" role="tablist"
+                style="background-color: rgb(241, 236, 229); margin-right: 132px;">
+
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#new"
+                        style="color: black;"><strong>Sales</strong></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#progress"
+                        style="color: black;"><strong>Invantory</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#verified"
+                        style="color: black;"><strong>Production</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#rejected"
+                        style="color: black;"><strong>Account</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#vehicledocument"
+                        style="color: black;"><strong>Installation</strong></a>
+                </li>
+            </ul>
+
+            <div class="row tab-content" style="margin-top: -10px; margin-left: -25px;">
+                <!-- Sales Department -->
+                <div class="table_parent_div col-lg-11 col-md-11 tab-pane active" style="padding-bottom: 3%" id="new">
+                    <div class="basic_info_card table_card" id="menu3">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr.no</th>
+                                    <th scope="col">Emp_id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email Id</th>
+                                    <th scope="col">Mobile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Rajendra Sir</td>
+                                    <td>Sales Head</td>
+                                    <td>@mdo</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Invantory Department -->
+                <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%"
+                    id="progress">
+                    <div class="table_card" id="menu3">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr.no</th>
+                                    <th scope="col">Emp_id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email Id</th>
+                                    <th scope="col">Mobile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Shri hari</td>
+                                    <td>Invantory</td>
+                                    <td>@mdo</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- production department -->
+
+                <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%"
+                    id="verified">
+                    <div class="table_card" id="menu3">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr.no</th>
+                                    <th scope="col">Emp_id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email Id</th>
+                                    <th scope="col">Mobile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Snehali Mam</td>
+                                    <td>Production</td>
+                                    <td>@mdo</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Account Department -->
+
+                <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%"
+                    id="rejected">
+                    <div class="table_card" id="menu3">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr.no</th>
+                                    <th scope="col">Emp_id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email Id</th>
+                                    <th scope="col">Mobile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Pradip Sir</td>
+                                    <td>Account</td>
+                                    <td>@mdo</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Installation Department -->
+
+                <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%"
+                    id="vehicledocument">
+                    <div class="table_card" id="menu3">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr.no</th>
+                                    <th scope="col">Emp_id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email Id</th>
+                                    <th scope="col">Mobile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Vaibhav Sir</td>
+                                    <td>Installation Head</td>
+                                    <td>@mdo</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- add user form -->
+
+
+    <!-- scripts -->
+    <script>
+        let btn = document.querySelector("#btn");
+        let sidebar = document.querySelector(".sidebar");
+        let searchBtn = document.querySelector(".bx-search");
+        let handle_click1 = document.querySelector(".button");
+
+        btn.onclick = function () {
+            sidebar.classList.toggle("active");
+        };
+        searchBtn.onclick = function () {
+            sidebar.classList.toggle("active");
+        };
+
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+        // store the currently selected tab in the hash value
+        $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+            var id = $(e.target).attr("href").substr(1);
+            window.location.hash = id;
+        });
+
+        // on load of the page: switch to the currently selected tab
+        var hash = window.location.hash;
+        $('#myTab a[href="' + hash + '"]').tab('show');
+
+    </script>
+</body>
+
+</html>

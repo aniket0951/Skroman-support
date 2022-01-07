@@ -54,14 +54,26 @@ def VerifyOtp(request, otp):
     login = LoginModel.objects.filter(email=email, user_otp=otp)
     serializer = LoginSerializer(login, many=True)
     if login:
-        return HttpResponse(f"your otp is {otp} and email is {email}")
+        dep = serializer.data[0]['department']
+        return navigateScreen(request,dep)
     else:
         return JsonResponse("User Authentication or otp verification failed", safe=False)
 
-
+# generate the opt for verification
 def generateOTP():
     digits = "0123456789"
     OTP = ""
     for i in range(4):
         OTP += digits[math.floor(random.random() * 10)]
     return OTP
+
+# check the department and navigate the screen by dep
+def navigateScreen(request,department):
+    if department == "Admin":
+        return render(request,'AdminHome.html')
+    elif department == "Inventory":
+        pass
+
+# all user list show and add new user
+def AllUsers(request):
+    return render(request, 'CreateUser.html')

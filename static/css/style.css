@@ -274,4 +274,16 @@ img {
 #list_graph{
   margin-top: 120px;
 }
+.userparent .child1{
+  color: black;
+  margin-left: 120px;
+  margin-top: 10px;
+}
+.userparent .child1 .addNewBtn{
+  float: right;
+  margin-right: 60px;
+  margin-top: -30px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
 
