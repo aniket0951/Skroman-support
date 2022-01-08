@@ -9,7 +9,9 @@ from django.conf import settings
 import smtplib
 from .models import LoginModel
 from .Serializers import LoginSerializer
-
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+import json
 
 # Create your views here.
 def TestFun(request):
@@ -77,3 +79,23 @@ def navigateScreen(request,department):
 # all user list show and add new user
 def AllUsers(request):
     return render(request, 'CreateUser.html')
+
+@csrf_exempt
+def AddNewUser(request):
+    employee_id = request.GET.get('employee_id')
+    name = request.GET.get('name')
+    email = request.GET.get('email')
+    contact_no = request.GET.get('contact_no')
+    designation = request.GET.get('designation')
+    department = request.GET.get('department')
+
+    addNew = LoginModel.objects.create(employee_id=employee_id,name=name,
+                                       email=email, contact_no=contact_no,
+                                       designation=designation,department=department)
+
+    if addNew:
+        messages.success(request, "New User Created Successfully")
+        return render(request, 'AdminHome.html')
+    else:
+        messages.error(request, "Faieled to create a new user . Please try again")
+        return render(request, 'CreateUser.html')    

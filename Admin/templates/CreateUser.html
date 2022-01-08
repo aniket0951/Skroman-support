@@ -19,10 +19,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="path/to/lightbox.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     
 </head>
 
-<body style="overflow-y: scroll;">
+<body >
     <!-- side-bar -->
     <div class="sidebar" id="main">
         <div class="logo_content">
@@ -116,32 +119,32 @@
     </div>
 
     <!-- navigation bar -->
-    <div class="navigation_bar">
+    <div class="navigation_bar" >
         <nav class="navbar">
             <div class="container-fluid" id="navigation_div">
                 <a class="navbar-brand">Skroman Support</a>
                 <i class="bx bx-menu"></i>
-                <a style="text-decoration: none;" class="nanbar-user">Aniket Suryawanshi</a>
+                <a style="text-decoration: none;" class="nanbar-user">Welcome Admin</a>
             </div>
         </nav>
     </div>
+
 
     <!-- user list parent div  -->
     <div class="row userparent">
         <div class="child1">
             <h1></h1>
-            <a href="" style="text-decoration:none" class="btn addNewBtn" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="@mdo">
-                <p id="rcorners1" style="background-color: blue;" class="button" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add New User</p>
+            <a href="" style="text-decoration:none" class="addNewBtn" data-toggle="modal" data-target="#modalLoginForm">
+                <p id="rcorners1" style="background-color: blue;">Add New User</p>
             </a>
         </div>
     </div>
 
-    <section class="parenttab" style="visibility: hidden;">
-        <div class="">
+    <section class="parenttab">
+        <div class="row child_tab">
+        <div class="col-lg-12 col-md-12" >
             <ul class="nav nav-pills option_tab" id="myTab" role="tablist"
-                style="background-color: rgb(241, 236, 229); margin-right: 132px;">
+                style="background-color: rgb(241, 236, 229);">
 
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#new"
@@ -166,9 +169,9 @@
                 </li>
             </ul>
 
-            <div class="row tab-content" style="margin-top: -10px; margin-left: -25px;">
+            <div class="tab-content">
                 <!-- Sales Department -->
-                <div class="table_parent_div col-lg-11 col-md-11 tab-pane active" style="padding-bottom: 3%" id="new">
+                <div class="table_parent_div  tab-pane active" id="new">
                     <div class="basic_info_card table_card" id="menu3">
                         <table class="table table-hover">
                             <thead>
@@ -213,7 +216,7 @@
                 </div>
 
                 <!-- Invantory Department -->
-                <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%"
+                <div class="table_parent_div  tab-pane fade in"
                     id="progress">
                     <div class="table_card" id="menu3">
                         <table class="table table-hover">
@@ -260,7 +263,7 @@
 
                 <!-- production department -->
 
-                <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%"
+                <div class="table_parent_div  tab-pane fade in"
                     id="verified">
                     <div class="table_card" id="menu3">
                         <table class="table table-hover">
@@ -307,7 +310,7 @@
 
                 <!-- Account Department -->
 
-                <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%"
+                <div class="table_parent_div  tab-pane fade in"
                     id="rejected">
                     <div class="table_card" id="menu3">
                         <table class="table table-hover">
@@ -354,7 +357,7 @@
 
                 <!-- Installation Department -->
 
-                <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%"
+                <div class="table_parent_div tab-pane fade in"
                     id="vehicledocument">
                     <div class="table_card" id="menu3">
                         <table class="table table-hover">
@@ -402,12 +405,110 @@
             </div>
         </div>
         </div>
-        </div>
     </section>
 
     <!-- add user form -->
 
+    <!-- Modal -->
 
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center" style="background-color: #f5dfef;">
+                    <h4 class="modal-title w-100 font-weight-bold" style="font-family: Poppins;"><strong>Add New User</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container" style="margin-top: 30px;">
+                    <form action="{% url 'addNewUser' %}" >
+                        <label >Emp_Id : </label>
+                        <input type="text" name="employee_id" placeholder="" style="border-radius: 10px; border: 2px solid gray; padding: 2px;" required>
+                        
+                        <label for="" style="margin-left: 40px;">Name : </label>
+                        <input type="text" name="name" placeholder="" style="border-radius: 10px; border: 2px solid gray; padding: 2px;" required><br><br>
+                        
+                        <label for="">Email Id : </label>
+                        <input type="text" name="email" placeholder="" style="border-radius: 10px; border: 2px solid gray; padding: 2px;" required>
+                        
+                        <label for="" style="margin-left: 40px;">Mobile No : </label>
+                        <input type="text" name="contact_no" placeholder="" style="border-radius: 10px; border: 2px solid gray; padding: 2px;" required><br><br>
+
+                        <label for="" >Designation : </label>
+                        <input type="text" name="designation" placeholder="" style="border-radius: 10px; border: 2px solid gray; padding: 2px;" required><br><br>
+                        
+                        <div id="dropDown">
+                            <label>Department:
+                              <input list="browsers" name="department" style="border-radius: 10px; border: 2px solid gray; padding: 2px;" required/></label>
+                            <datalist id="browsers">
+                              <option value="Admin">
+                              <option value="Invantory">
+                              <option value="Production">
+                              <option value="Sales">
+                              <option value="Installation">
+                            </datalist>
+            
+                        </div>
+                        <button class="btn btn-default" style="background-color: blue; color: white; width: 70px; margin-top: 15px; margin-bottom: 15px;">Save</button>
+                    </form>
+
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "error"%}
+        <script>
+            swal({
+              icon: 'warning',
+              text: 'Silor Login successfully',
+              buttons: {
+                cancel: "Cancel",
+                catch: {
+                  text: "Next",
+                  value: "catch",
+                }
+              },
+            })
+              .then((value) => {
+                switch (value) {
+                  case "catch":
+                    // window.location = "newtry";
+                    window.location = "{% url 'newtry' username %}"
+                    break;
+                }
+              });
+          </script>
+          {% else %}
+          <script>
+            swal({
+              icon: '/static/image/login_success.png',
+              text: 'Silor Login successfully',
+              buttons: {
+                cancel: "Cancel",
+                catch: {
+                  text: "Next",
+                  value: "catch",
+                }
+              },
+            })
+              .then((value) => {
+                switch (value) {
+                  case "catch":
+                    // window.location = "newtry";
+                    window.location = "{% url 'newtry' username %}"
+                    break;
+                }
+              });
+          </script>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+      </div>
     <!-- scripts -->
     <script>
         let btn = document.querySelector("#btn");

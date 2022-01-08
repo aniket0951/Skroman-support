@@ -1,8 +1,9 @@
 .navigation_bar {
   position: relative;
   width: calc(100% - 78px);
-  background-color: #ac52f5;
+  background-color: rgb(171, 12, 211);
   margin-left: 78.5px;
+  color: black;
 }
 .sidebar {
   position: absolute;
@@ -116,7 +117,7 @@
   margin-top: 4px;
   float: right;
   padding: 14px;
-  color: white;
+  color: black;
   text-decoration: none;
   height: 50px;
   width: 50px;
@@ -209,10 +210,6 @@
   margin-left: 100px;
   margin-bottom: 25px;
 }
-.parenttab .option_tab {
-  margin-left: -10.5px;
-  margin-bottom: 10px;
-}
 .sidebar.active ~ .parenttab {
   width: calc(100% - 240px);
   left: 160px;
@@ -222,6 +219,10 @@
 }
 .parenttab .option_tab a {
   color: black;
+}
+.child_tab{
+  width: 90%;
+  height: auto;
 }
 #rcorners1 {
   border-radius: 25px;
