@@ -46,23 +46,7 @@
     transform: rotate(360deg);
   }
 }
-.parentdiv {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  /* width: calc(100% - 78px);
-    height: 100vh; */
-  margin-left: 80px;
-  padding: 20px;
-  flex-wrap: wrap;
-}
-.parentdiv .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  width: 21%;
-  height: 80%;
-  padding: 20px;
-  margin-left: 20px;
-}
+
 .sidebar.active ~ .parentdiv {
   /* width: calc(100% - 240px); */
   left: 140px;

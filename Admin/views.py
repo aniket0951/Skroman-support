@@ -72,7 +72,7 @@ def generateOTP():
 # check the department and navigate the screen by dep
 def navigateScreen(request,department):
     if department == "Admin":
-        return render(request,'AdminHome.html')
+        return render(request,'MediaQ.html')
     elif department == "Inventory":
         pass
 
@@ -89,9 +89,12 @@ def AddNewUser(request):
     designation = request.GET.get('designation')
     department = request.GET.get('department')
 
+    auth_token = ''.join(random.choice('0123456789ABCDEF') for i in range(52))
+
     addNew = LoginModel.objects.create(employee_id=employee_id,name=name,
                                        email=email, contact_no=contact_no,
-                                       designation=designation,department=department)
+                                       designation=designation,department=department,
+                                       auth_token=auth_token)
 
     if addNew:
         messages.success(request, "New User Created Successfully")

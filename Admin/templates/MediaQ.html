@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/Media.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<style>
+    /* Media Query for Mobile Devices */
+    @media (max-width: 480px) {
+        body {
+            background-color: red;
+        }
+    }
+
+    /* Media Query for low resolution  Tablets, Ipads */
+    @media (min-width: 481px) and (max-width: 767px) {
+        body {
+            background-color: yellow;
+        }
+    }
+
+    /* Media Query for Tablets Ipads portrait mode */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        body {
+            background-color: blue;
+        }
+        .parent_card{
+            margin-left: 20px;
+        }
+
+    }
+
+    /* Media Query for Laptops and Desktops */
+    @media (min-width: 1025px) and (max-width: 1280px) {
+        body {
+            background-color: green;
+        }
+    }
+
+    /* Media Query for Large screens */
+    @media (min-width: 1281px) {
+        body {
+            background-color: white;
+        }
+    }
+</style>
+
+<body>
+    <div class="sidebar">
+        <a class="active" href="#home">Home</a>
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+    </div>
+
+    <!-- all leads count with card view -->
+    <div class="container">
+        <div class="row parent_card">
+            <div class="col-12 col-md-3 col-lg-3">
+                <div class="card user_card">
+                    <div class="card-body">
+                        <h5 class="card-title">Builder</h5>
+                        <p class="card-text" id="textNumber">10,502</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+                <div class="card user_card1">
+                    <div class="card-body">
+                        <h5 class="card-title">Builder</h5>
+                        <p class="card-text" id="textNumber">10,502</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+                <div class="card user_card">
+                    <div class="card-body">
+                        <h5 class="card-title">Builder</h5>
+                        <p class="card-text" id="textNumber">10,502</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+                <div class="card user_card1">
+                    <div class="card-body">
+                        <h5 class="card-title">Builder</h5>
+                        <p class="card-text" id="textNumber">10,502</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- table view -->
+    <div class="table_header">
+        <div class="row ">
+            <div class="col-12 col-md-8 col-lg-8 bg-secondary">
+                <div class="">
+                    <table>
+                        <tr>
+                            <th>Company</th>
+                            <th>Contact</th>
+                            <th>Country</th>
+                        </tr>
+                        <tr>
+                            <td>Alfreds Futterkiste</td>
+                            <td>Maria Anders</td>
+                            <td>Germany</td>
+                        </tr>
+                        <tr>
+                            <td>Centro comercial Moctezuma</td>
+                            <td>Francisco Chang</td>
+                            <td>Mexico</td>
+                        </tr>
+                        <tr>
+                            <td>Ernst Handel</td>
+                            <td>Roland Mendel</td>
+                            <td>Austria</td>
+                        </tr>
+                        <tr>
+                            <td>Island Trading</td>
+                            <td>Helen Bennett</td>
+                            <td>UK</td>
+                        </tr>
+                        <tr>
+                            <td>Laughing Bacchus Winecellars</td>
+                            <td>Yoshi Tannamuri</td>
+                            <td>Canada</td>
+                        </tr>
+                        <tr>
+                            <td>Magazzini Alimentari Riuniti</td>
+                            <td>Giovanni Rovelli</td>
+                            <td>Italy</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 bg-danger">
+    
+            </div>
+        </div>
+    </div>
+    
+
+
+</body>
+
+</html>

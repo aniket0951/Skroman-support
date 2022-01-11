@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Admin User</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/DriverReq.css' %}" />
@@ -25,7 +26,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="path/to/lightbox.js"></script>
 </head>
-<body>
+<body style="background-color: #cee1ed;">
      <!-- side-bar -->
      <div class="sidebar" id="main">
         <div class="logo_content">
@@ -124,10 +125,190 @@
           <div class="container-fluid" id="navigation_div">
             <a class="navbar-brand">Skroman Support</a>
             <i class="bx bx-menu"></i>
-            <a style="text-decoration: none;" class="nanbar-user">Aniket Suryawanshi</a>
+            <a style="text-decoration: none;" class="nanbar-user">Welcome Admin</a>
           </div>
         </nav>
       </div>
+
+      <!-- All Leads count with card view  -->
+      <div class="parentdiv" >
+        <!-- Builder view -->
+        <div class="row">
+          <div class="card col-12 col-lg-3 col-md-3 user_card">
+            <img
+              src="/static/image/total_customer.png"
+              style="width: 25px; height: 25px"
+              alt="Avatar"
+            />
+            <img
+              src="/static/image/total_customer_graph_img.png"
+              alt="Avatar"
+              style="float: right; margin-top: 25px"
+            />
+            <p class="card-text" id="text">Builder</p>
+            <p class="card-text" id="textNumber">10,502</p>
+          </div>
+
+          <!-- Architect view -->
+          <div class="card col-12 col-lg-3 col-md-3 user_card1">
+            <img
+              src="/static/image/new_cutomer_icon.png"
+              style="width: 25px; height: 25px"
+              alt="Avatar"
+            />
+            <img
+              src="/static/image/new_customer_graph.img.png"
+              alt="Avatar"
+              style="float: right; margin-top: 25px"
+            />
+            <p class="card-text text_res" id="text">Architect</p>
+            <p class="card-text" id="textNumber">10,358</p>
+          </div>
+
+          <!-- Interior view  -->
+          <div class="card col-12 col-lg-3 col-md-3 user_card">
+            <img
+              src="/static/image/happy_customer_img.png"
+              style="width: 25px; height: 25px"
+              alt="Avatar"
+            />
+            <img
+              src="/static/image/happy_customer_graph_img.png"
+              alt="Avatar"
+              style="float: right; margin-top: 25px"
+            />
+            <p class="card-text" id="text_long">Interior Design</p>
+            <p class="card-text" id="textNumber">10,358</p>
+          </div>
+
+          <!-- System Integrator view -->
+          <div class="card col-12 col-lg-3 col-md-3 user_card1">
+            <img src="/static/image/verifiyed_customer_img.png" alt="Avatar" />
+            <img
+              src="/static/image/verifyied_customer_graph_img.png"
+              alt="Avatar"
+              style="float: right; margin-top: 25px"
+            />
+            <p class="card-text" id="text_long">System Integrator</p>
+            <p class="card-text" id="textNumber">10,358</p>
+          </div>
+        </div>
+      </div><br><br>
+
+      <!-- show all lead information with data and table view -->
+      <section class="parenttab" style="margin-top: 80px;">
+        <div class="row child_tab">
+        <div class="col-lg-12 col-md-12" >
+            <ul class="nav nav-pills option_tab" id="myTab" role="tablist">
+
+                <nav class="navbar navbar-light bg-light justify-content-between">
+                  <a class="navbar-brand" style="margin-top: 10px;">Client Lead Data</a>
+                  <form class="form-inline" style="float: right; margin-top: 15px; margin-right: 15px;">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color: cornflowerblue;">Search</button>
+                  </form>
+                </nav>
+            </ul>
+
+            <div class="tab-content" style="margin-top: -10px;">
+                <!-- Sales Department -->
+                <div class="table_parent_div  tab-pane active" id="new">
+                    <div class="basic_info_card table_card" id="menu3">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr.no</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Mobile No</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Rajendra Sir</td>
+                                    <td>Sales Head</td>
+                                    <td>@mdo</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1212</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+      <!-- handling messages -->
+      <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "error"%}
+        <script>
+            swal({
+              icon: 'warning',
+              text: '{{ message }}',
+              buttons: {
+                cancel: "Cancel",
+                catch: {
+                  text: "Next",
+                  value: "catch",
+                }
+              },
+            })
+              .then((value) => {
+                switch (value) {
+                  case "catch":
+                    break;
+                }
+              });
+          </script>
+          {% else %}
+          <script>
+            swal({
+              icon: '/static/image/login_success.png',
+              text: '{{ message }}',
+              buttons: {
+                cancel: "Cancel",
+                catch: {
+                  text: "Done",
+                  value: "catch",
+                }
+              },
+            })
+              .then((value) => {
+                switch (value) {
+                  case "catch":
+                    // window.location = "newtry";
+                    break;
+                }
+              });
+          </script>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+    </div>
 
       <!-- scripts -->
     <script>

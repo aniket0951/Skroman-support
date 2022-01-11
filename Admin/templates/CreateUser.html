@@ -465,7 +465,7 @@
         <script>
             swal({
               icon: 'warning',
-              text: 'Silor Login successfully',
+              text: '{{ message }}',
               buttons: {
                 cancel: "Cancel",
                 catch: {
@@ -477,8 +477,6 @@
               .then((value) => {
                 switch (value) {
                   case "catch":
-                    // window.location = "newtry";
-                    window.location = "{% url 'newtry' username %}"
                     break;
                 }
               });
@@ -508,7 +506,7 @@
           {% endif %}
           {% endfor %}
           {% endif %}
-      </div>
+    </div>
     <!-- scripts -->
     <script>
         let btn = document.querySelector("#btn");

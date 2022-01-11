@@ -1,0 +1,104 @@
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+.user_card {
+  background: linear-gradient(
+    0deg,
+    rgba(19, 44, 22, 1) 6%,
+    rgba(34, 195, 139, 1) 91%
+  );
+  color: white;
+  font-family: "Poppins";
+  font-weight: bold;
+  margin-left: 40px;
+  margin-top: 15px;
+}
+.user_card1 {
+  color: white;
+  font-family: "Poppins";
+  font-weight: bold;
+  background: linear-gradient(
+    0deg,
+    rgba(42, 135, 191, 1) 0%,
+    rgba(235, 101, 219, 1) 78%
+  );
+  margin-left: 40px;
+  margin-top: 15px;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.table_header {
+  width: 84%;
+  height: 100vh;
+  margin-left: 17 2px;
+}
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 150px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #04aa6d;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {
+    float: left;
+  }
+  div.content {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
