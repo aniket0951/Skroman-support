@@ -13,9 +13,10 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 import json
 
+
 # Create your views here.
 def TestFun(request):
-    return render(request, 'LoginTemp.html')
+    return render(request, 'Verify.html')
 
 
 def LoginUser(request):
@@ -34,12 +35,12 @@ def LoginUser(request):
             if SendOTP(email, request, otp):
                 login = LoginModel.objects.filter(email=email).update(user_otp=otp)
                 messages.info(request, f"{email} {otp}")
-                response = render(request, 'LoginTemp.html')
+                response = render(request, 'Verify.html')
                 response.set_cookie('email', email)
                 return response
             else:
                 messages.error(request, "Failed to send a verification code please try again.")
-                return render(request, 'LoginTemp.html')
+                return render(request, 'Login.html')
         else:
             messages.error(request,
                            "Authentication Failed You Are Not A Authenticated User.Please Enter Correct Details")
@@ -57,9 +58,10 @@ def VerifyOtp(request, otp):
     serializer = LoginSerializer(login, many=True)
     if login:
         dep = serializer.data[0]['department']
-        return navigateScreen(request,dep)
+        return navigateScreen(request, dep)
     else:
         return JsonResponse("User Authentication or otp verification failed", safe=False)
+
 
 # generate the opt for verification
 def generateOTP():
@@ -69,16 +71,19 @@ def generateOTP():
         OTP += digits[math.floor(random.random() * 10)]
     return OTP
 
+
 # check the department and navigate the screen by dep
-def navigateScreen(request,department):
+def navigateScreen(request, department):
     if department == "Admin":
-        return render(request,'MediaQ.html')
+        return render(request, 'MediaQ.html')
     elif department == "Inventory":
         pass
+
 
 # all user list show and add new user
 def AllUsers(request):
     return render(request, 'CreateUser.html')
+
 
 @csrf_exempt
 def AddNewUser(request):
@@ -91,14 +96,14 @@ def AddNewUser(request):
 
     auth_token = ''.join(random.choice('0123456789ABCDEF') for i in range(52))
 
-    addNew = LoginModel.objects.create(employee_id=employee_id,name=name,
+    addNew = LoginModel.objects.create(employee_id=employee_id, name=name,
                                        email=email, contact_no=contact_no,
-                                       designation=designation,department=department,
+                                       designation=designation, department=department,
                                        auth_token=auth_token)
 
     if addNew:
         messages.success(request, "New User Created Successfully")
-        return render(request, 'AdminHome.html')
+        return render(request, 'MediaQ.html')
     else:
         messages.error(request, "Faieled to create a new user . Please try again")
-        return render(request, 'CreateUser.html')    
+        return render(request, 'CreateUser.html')
