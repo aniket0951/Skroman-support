@@ -22,19 +22,18 @@
     <div class='container-fluid Logi_body'>
         <div class='row logi_main'>
             <div class='col-12 col-md-8 col-lg-8 left_div'>
-                <img class='img-thumbnail' src="/static/image/log_main.jpg" alt='log_main' />
+                <img class='img-thumbnail' src="/static/image/log_main.jpeg" alt='log_main' />
             </div>
             <div class='col-12 col-md-4 col-lg-4 pt-5 right_div'>
                 <img class="mx-auto d-block rounded" src="/static/image/Tr_logo.png" alt='logo' />
                 <h1 class='text-center pt-3'>Verify</h1>
-                <hr class='mx-auto d-block'/>
-                <div class="mx-auto d-flex pt-2 pb-5 input_div">
-                    <input type="text" maxLength={1} class="form-control" autofocus="" /> &nbsp;&nbsp;&nbsp;
-                    <input type="text" maxLength={1} class="form-control" />&nbsp;&nbsp;&nbsp;
-                    <input type="text" maxLength={1} class="form-control" />&nbsp;&nbsp;&nbsp;
-                    <input type="text" maxLength={1} class="form-control" />&nbsp;&nbsp;&nbsp;
-                </div>
-                <button type="submit" class="btn btn-primary mx-auto d-block btn-lg">Verify</button>
+                <form action="{% url 'loginUser' %}">
+                    <div class="mx-auto d-flex pt-2 pb-5 input_div">
+                        <input  class="form-control" id="email" placeholder="Enter otp" name="otp" />
+                    </div>
+                    <button type="submit" class="btn btn-primary mx-auto d-block btn-lg" >Verify</button>
+                </form>
+                
             </div>
         </div>
        </div>
