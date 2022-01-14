@@ -16,7 +16,13 @@ import json
 
 # Create your views here.
 def TestFun(request):
-    return render(request, 'Verify.html')
+    loginStat = request.COOKIES.get('loginStatus')
+    dep = request.COOKIES.get('department')
+
+    if loginStat == "Login" and IsValidParam(dep, request):
+        return navigateScreen(request, dep)
+    else:
+        return render(request, 'Login.html')
 
 
 def LoginUser(request):
@@ -75,7 +81,10 @@ def generateOTP():
 # check the department and navigate the screen by dep
 def navigateScreen(request, department):
     if department == "Admin":
-        return render(request, 'MediaQ.html')
+        response = render(request, 'MediaQ.html')
+        response.set_cookie('loginStatus', "Login")
+        response.set_cookie('department', department)
+        return response
     elif department == "Inventory":
         pass
 
@@ -85,6 +94,7 @@ def AllUsers(request):
     return render(request, 'CreateUser.html')
 
 
+# add new user department wise only authenticate for admin user
 @csrf_exempt
 def AddNewUser(request):
     employee_id = request.GET.get('employee_id')
