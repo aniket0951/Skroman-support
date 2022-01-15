@@ -136,18 +136,28 @@
 
     <!-- show a client details in mobile view using card view -->
     {% for i in client_data %}
-    <div class="card">
+    <div class="card" id="ca">
         <div class="container">
             <h4><b>{{ i.c_name }}</b></h4>
+            {% if i.lead_status == '1' %}
+            <h4 style="float: right; margin-top: -33px; color: yellow;"><b>Present Lead</b></h4>
+            {% elif i.lead_status == '2' %}
+            <h4 style="float: right; margin-top: -33px; color: green;"><b>Active Lead</b></h4>
+            {% elif i.lead_status == '3' %}
+            <h4 style="float: right; margin-top: -33px; color: red;"><b>Close Lead</b></h4>
+            {% elif i.lead_status == '4' %}
+            <h4 style="float: right; margin-top: -33px; color: orange;"><b>Dead Lead</b></h4>
+            {% endif %}
             <p>{{ i.c_email }}</p>
             <p>{{ i.c_address }}</p>
             <p>{{ i.c_mobile }}</p>
             <p>{{ i.uptime }}</p>
             <a style="text-decoration:none" href="{% url 'editClientDetails' %}">
-                <button type="submit" class="btn btn-primary  d-block btn-lg" >Edit</button>
+                <button type="submit" class="btn btn-primary  d-block btn-lg">Edit</button>
             </a>
-            <a style="text-decoration:none; float: right; margin-top: -55px;" onclick="return confirm('Are you sure?')">
-                <button type="submit" class="btn btn-primary  d-block btn-lg delete_btn" >Delete</button>
+            <a style="text-decoration:none; float: right; margin-top: -55px;"
+                href="{% url 'deleteLead' i.lead_id 'conform' %}">
+                <button type="submit" class="btn btn-primary  d-block btn-lg delete_btn">Delete</button>
             </a>
         </div>
     </div>
@@ -183,6 +193,10 @@
                 .then((value) => {
                     switch (value) {
                         case "catch":
+                            window.location = "{% url 'testFuns' %}"
+                            break;
+                        default:
+                            window.location = "{% url 'testFuns' %}"
                             break;
                     }
                 });
@@ -203,6 +217,44 @@
                 .then((value) => {
                     switch (value) {
                         case "catch":
+                            window.location = "{% url 'testFuns' %}"
+                            break;
+                        default:
+                            window.location = "{% url 'testFuns' %}"
+                            break;
+                    }
+                });
+        </script>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- conformation from user before delete lead -->
+    <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "info"%}
+        <script>
+            swal({
+                icon: 'warning',
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this lead!",
+                buttons: {
+                    cancel: "Cancel",
+                    catch: {
+                        text: "Next",
+                        value: "catch",
+                    }
+                },
+            })
+                .then((value) => {
+                    switch (value) {
+                        case "catch":
+                            window.location = "{% url 'deleteLead' lead_id 'delete'%}"
+                            break;
+                        default:
+                            window.location = "{% url 'testFuns' %}"
                             break;
                     }
                 });
@@ -221,6 +273,7 @@
                 x.style.display = "block";
             }
         }
+
     </script>
 
 </body>

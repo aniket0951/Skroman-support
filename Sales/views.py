@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import leadDetails, clientDetails, leadReferances, clientProjectDetails
 from .SaleSerializers import LeadDetailsSerializer, ClientDetailsSerializer,\
@@ -11,9 +11,16 @@ from django.contrib import messages
 # show sales depart home screen
 def TestFun(request):
     clientData = clientDetails.objects.all()
-    cliet_seri = ClientDetailsSerializer(clientData, many=True)
+    client_seri = ClientDetailsSerializer(clientData, many=True)
+    
+    leadData = leadDetails.objects.all()
+    lead_ser = LeadDetailsSerializer(leadData, many=True)
+
+    client_seri.data[0] = "suryawanshi"
+    print(client_seri.data)
+
     context = {
-        'client_data': cliet_seri.data
+        'client_data': client_seri.data
     }
     return render(request, 'SalesHome.html', context)
 
@@ -90,14 +97,22 @@ def editClientDetails(request):
     return JsonResponse("Edit client details called", safe=False)
 
 # delete a lead 
-def deleteLead(request, lead_id):
-    del_client = clientDetails.objects.get(lead_id=lead_id)
-    del_lead_ref = leadReferances.objects.get(lead_id=lead_id)
-    del_proj_details = clientProjectDetails.objects.get(lead_id=lead_id)
+def deleteLead(request, lead_id, tag):
+    if tag == 'delete':
+        del_client = clientDetails.objects.get(lead_id=lead_id)
+        del_lead_ref = leadReferances.objects.get(lead_id=lead_id)
+        del_proj_details = clientProjectDetails.objects.get(lead_id=lead_id)
 
-    del_client.delete()
-    del_lead_ref.delete()
-    del_proj_details.delete()
+        del_client.delete()
+        del_lead_ref.delete()
+        del_proj_details.delete()
 
-    messages.success(request, "Lead Deleted Successfully")
-    return render(request, 'SalesHome.html')
+        messages.success(request, "Lead Deleted Successfully")
+        return render(request, 'SalesHome.html')
+    elif tag == "conform":
+        clientData = clientDetails.objects.all()
+        cliet_seri = ClientDetailsSerializer(clientData, many=True)
+        messages.info(request, "info")
+        return render(request, 'SalesHome.html', {'lead_id': lead_id, 'client_data': cliet_seri.data})
+    else:
+        return JsonResponse(f"not a post method {lead_id}", safe=False)

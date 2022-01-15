@@ -6,5 +6,5 @@ urlpatterns = [
     path('TestFuns/', TestFun, name="testFuns"),
     path('addNewClient/<str:tag>/', addNewClient, name="addNewClient"),
     path('editClientDetails/', editClientDetails, name="editClientDetails"),
-    path('deleteLead/<str:lead_id>/', deleteLead, name="deleteLead"),
+    path('deleteLead/<str:lead_id>/<str:tag>/', deleteLead, name="deleteLead"),
 ]
