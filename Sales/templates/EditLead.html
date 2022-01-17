@@ -1,0 +1,339 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Lead</title>
+    <link rel="stylesheet" href="/static/css/editLead.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+    <script
+        src="https://unpkg.com/bootstrap-table@1.19.1/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script>
+    <script src="extensions/mobile/bootstrap-table-mobile.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+<!-- handle a screen configration -->
+<style>
+    /* Media Query for Mobile Devices */
+    @media (max-width: 480px) {
+        body {
+            /* background-color: red; */
+            background-color: #cee1ed;
+            ;
+        }
+
+        .navigation_bar {
+            /* margin-left: 0px;
+            background-color: #04aa6d; */
+            display: none;
+        }
+
+        .mobile-container {
+            display: block;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        #editLead {
+            display: none;
+        }
+
+        .form-group {
+            width: 80%;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        .form-select {
+            margin-left: 15px;
+            margin-right: 15px;
+            width: 80%;
+        }
+        .lead_lebel{
+            margin-left: 15px;
+            margin-top: 10px;
+        }
+        .largerCheckbox {
+            width: 20px;
+            height: 20px;
+            margin-top: 20px;
+        }
+
+        .check_txt {
+            margin-top: -100px;
+        }
+
+        .card{
+            margin-right: 18px;
+        }
+    }
+
+    /* Media Query for low resolution  Tablets, Ipads */
+    @media (min-width: 481px) and (max-width: 767px) {
+        body {
+            background-color: yellow;
+        }
+
+        .navigation_bar {
+            margin-left: 0px;
+            background-color: #04aa6d;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+    }
+
+    /* Media Query for Tablets Ipads portrait mode */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        body {
+            background-color: blue;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+    }
+
+    /* Media Query for Laptops and Desktops */
+    @media (min-width: 1025px) and (max-width: 1280px) {
+        body {
+            background-color: green;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+    }
+
+    /* Media Query for Large screens */
+    @media (min-width: 1281px) {
+        body {
+            background-color: white;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+
+        .card {
+            display: none;
+        }
+    }
+</style>
+
+<body>
+    <!-- sidebar with options -->
+    <div class="sidebar">
+        <a class="active" href="#home">HOME</a>
+        <a href="{% url 'allUsers' %}">CREATE USER</a>
+        <a href="#contact">LEADS</a>
+        <a href="#about">TRACK</a>
+        <a href="{% url 'testFuns' %}">SALES</a>
+        <a href="#about">INVANTORY</a>
+        <a href="#about">PRODUCTION</a>
+        <a href="#about">ACCOUNT</a>
+        <a href="#about">INSTALLATION</a>
+    </div>
+
+    <!-- Simulate a smartphone / tablet look -->
+    <div class="mobile-container">
+
+        <!-- Top Navigation Menu -->
+        <div class="topnav">
+            <!-- <a href="#home" class="active">Home</a> -->
+            <div id="myLinks">
+                <a href="#" onclick="oldNotes()" id="follow_btn">Old Notes</a>
+                <a href="#" onclick="editLeads()" id="edit_btn">Edit Lead</a>
+                <a href="#" onclick="addNotes()" id="add_note_btn">Add Note</a>
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()" style="background-color: #333;">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+        <!-- End smartphone / tablet look -->
+    </div>
+
+    <!-- show a lead details and implement a edit option -->
+    {% for i in client_data %}
+    <form action="{% url 'editClientDetails' 'edit' i.lead_id %}" id="editLead" style="display: block;">
+        <h3 class="form_head">Edit Lead</h3>
+        <!-- client details -->
+        <div class="form-group">
+            <label for="exampleInputEmail1">Client Name</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="c_name" aria-describedby="emailHelp"
+                value="{{ i.c_name }}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Client Email</label>
+            <input type="text" class="form-control" name="c_email" value="{{ i.c_email }}" id="exampleInputPassword1">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Client Mobile Number</label>
+            <input type="number" maxlength="10" class="form-control" name="c_mobile" value="{{ i.c_mobile }}"
+                id="exampleInputPassword1">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Client Address</label>
+            <input type="text" class="form-control" name="c_address" value="{{ i.c_address }}" id="clientAddress">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Client Site Address</label>
+            <input type="text" class="form-control" name="c_site_address" value="{{ i.c_site_address }}"
+                id="clientSiteAddress">
+        </div>
+
+        <div class="mb-3" id="dropDown1">
+            <label for="pwd" class="form-label">Client Type:</label>
+            <select id="list" class="form-select" name="client_type" aria-label="Default select example">
+                <option value="{{ i.c_type }}">{{ i.c_type }}</option>
+                <option value="End User">End User</option>
+                <option value="Builder">Builder</option>
+                <option value="Architect">Architect</option>
+                <option value="Designer">Designer</option>
+            </select>
+        </div>
+
+        <!-- client project details -->
+        {% for i in project_data %}
+        <div class="form-group" id="project_div" style="display: block;">
+            <label for="exampleInputPassword1">Project Name</label>
+            <input type="text" class="form-control" name="p_name" value="{{ i.project_name }}"
+                id="exampleInputPassword1">
+        </div>
+        <div class="form-group" id="project_div2">
+            <label for="exampleInputPassword1">Project Site Number</label>
+            <input type="number" maxlength="10" class="form-control" name="p_site_number" value="{{ i.site_number }}"
+                id="exampleInputPassword1">
+        </div>
+        <div class="form-group" id="project_div3">
+            <label for="exampleInputPassword1">Project Address</label>
+            <input type="text" class="form-control" name="p_address" value="{{ i.project_address }}"
+                id="exampleInputPassword1">
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary sub_btn">Submit</button>
+        <h3></h3>
+
+    </form>
+    {% endfor %}
+
+    <!-- lead follow up and order conformation -->
+    {% for i in client_data %}
+    <form action="{% url 'addLeadNote' i.lead_id %}"  style="display: none;" id="addNotes">
+       
+        <!-- check lead status -->
+        {% if i.lead_status == '1' %}
+        <label class="lead_lebel" for="" style="color: yellow;"><strong>Present Lead</strong></label>
+        {% elif i.lead_status == '2' %}
+        <label class="lead_lebel" for="" style="color: green;"><strong>Active Lead</strong></label>
+        {% elif i.lead_status == '3' %}
+        <label class="lead_lebel" for="" style="color: orange;"><strong>Closed Lead</strong></label>
+        {% elif i.lead_status == '4' %}
+        <label class="lead_lebel" for="" style="color: red;"><strong>Dead Lead</strong></label>
+        {% endif %}
+        <div class="form-group">
+            <label for="exampleInputEmail1">Note : </label>
+            <textarea rows="4" class="form-control" cols="50" name="comment" ></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="birthday">Next FollowUp :</label>
+            <input type="date" id="birthday" name="next_follow">
+        </div>
+
+        <div class="form-group">
+            <label for="birthday">TideUp Date :</label>
+            <input type="date" id="birthday" name="tied_up_date">
+        </div>
+
+        <div class="form-check">
+            <label class="check_txt" >Order Conform : </label>
+            <input class="largerCheckbox"   type="checkbox" value="conform" id="project" name="isOrderConform">
+        </div>
+        
+
+        <button type="submit" class="btn btn-primary sub_btn">Add Note</button>
+    </form>
+    {% endfor %}
+
+    <!-- showing old notes -->
+    {% for i in note_data %}
+    <div class="card" id="oldNotes">
+        <div class="container">
+            <label for=""><strong>Note Generate:</strong></label>
+            <label for="">{{ i.timestamp }}</label>
+
+            <label for=""><strong>Next FollowUp Date</strong></label>
+            <p>{{ i.next_follow }}</p>
+
+            <label for=""><strong>TideUp Date</strong></label>
+            <p>{{ i.tied_up_date }}</p>
+
+            <label for=""><strong>Note :</strong></label>
+            <p>{{ i.note }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+
+        function oldNotes() {
+            var add_note_btn = document.getElementById('addNotes');
+            var edit_lead = document.getElementById('editLead');
+            var old_notes = document.getElementById('oldNotes');
+
+            add_note_btn.style.display = 'none';
+            edit_lead.style.display = 'none';
+            old_notes.style.display = 'block';
+        }
+
+        function editLeads() {
+            var add_note_btn = document.getElementById('addNotes');
+            var edit_lead = document.getElementById('editLead');
+            var old_notes = document.getElementById('oldNotes');
+
+            add_note_btn.style.display = 'none';
+            edit_lead.style.display = 'block';
+            old_notes.style.display = 'none';
+        }
+
+        function addNotes(){
+            var add_note_btn = document.getElementById('addNotes');
+            var edit_lead = document.getElementById('editLead');
+            var old_notes = document.getElementById('oldNotes');
+
+            add_note_btn.style.display = 'block';
+            edit_lead.style.display = 'none';
+            old_notes.style.display = 'none';
+        }
+
+    </script>
+
+</body>
+
+</html>

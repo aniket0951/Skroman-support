@@ -4,6 +4,7 @@ import random
 from django.core.mail import send_mail
 from django.conf import settings
 import smtplib
+import time
 
 # -------- to check empty values or null point check -------------
 def IsValidParam(param, request):
@@ -22,3 +23,7 @@ def SendOTP(email,request, otp):
         return True, otp
     else:
         return False
+
+def GetCurrentTime():
+    localtime = time.asctime(time.localtime(time.time()))
+    return localtime

@@ -47,6 +47,9 @@
         .sidebar {
             display: none;
         }
+        #editLead{
+            display: none;
+        }
     }
 
     /* Media Query for low resolution  Tablets, Ipads */
@@ -133,6 +136,7 @@
         </div>
         <!-- End smartphone / tablet look -->
     </div>
+    
 
     <!-- show a client details in mobile view using card view -->
     {% for i in client_data %}
@@ -152,7 +156,7 @@
             <p>{{ i.c_address }}</p>
             <p>{{ i.c_mobile }}</p>
             <p>{{ i.uptime }}</p>
-            <a style="text-decoration:none" href="{% url 'editClientDetails' %}">
+            <a style="text-decoration:none" href="{% url 'editClientDetails' 'show' i.lead_id %}">
                 <button type="submit" class="btn btn-primary  d-block btn-lg">Edit</button>
             </a>
             <a style="text-decoration:none; float: right; margin-top: -55px;"
