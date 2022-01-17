@@ -8,6 +8,8 @@ class leadDetails(models.Model):
     status_code = models.CharField(max_length=10, null=True, blank=True)
     ctime = models.DateTimeField(auto_now_add=True)
     uptime = models.DateTimeField(auto_now=True)
+    timestamp = models.CharField(max_length=60, null=True, blank=True)
+
 
     class Meta:
         db_table = 'lead_details'
@@ -25,6 +27,7 @@ class clientDetails(models.Model):
     lead_status = models.CharField(max_length=20, null=True, blank=True)
     ctime = models.DateTimeField(auto_now_add=True)
     uptime = models.DateTimeField(auto_now=True)
+    timestamp = models.CharField(max_length=60, null=True, blank=True)
 
     class Meta:
         db_table = 'client_details'
@@ -38,6 +41,8 @@ class clientProjectDetails(models.Model):
     lead_status = models.CharField(max_length=40, null=True, blank=True)
     ctime = models.DateTimeField(auto_now_add=True)
     uptime = models.DateTimeField(auto_now=True)
+    timestamp = models.CharField(max_length=60, null=True, blank=True)
+
     class Meta:
         db_table = 'client_project_details'
 
@@ -52,7 +57,8 @@ class leadReferances(models.Model):
     ref_type = models.CharField(max_length=40, null=True, blank=True)
     ctime = models.DateTimeField(auto_now_add=True)
     uptime = models.DateTimeField(auto_now=True)
-    
+    timestamp = models.CharField(max_length=60, null=True, blank=True)
+
     class Meta:
         db_table = 'lead_referances'
 
@@ -64,4 +70,15 @@ class leadStatus(models.Model):
     class Meta:
         db_table = 'lead_status'
 
- 
+# lead notes when lead is generate
+class leadNotes(models.Model):
+    id = models.AutoField(primary_key=True)
+    lead_id = models.CharField(max_length=120, null=True, blank=True)
+    note = models.CharField(max_length=4450, null=True,blank=True)
+    next_follow = models.CharField(max_length=150, null=True,blank=True)
+    tied_up_date = models.CharField(max_length=150, null=True,blank=True)
+    lead_status = models.CharField(max_length=50, null=True,blank=True)
+    timestamp = models.CharField(max_length=150, null=True,blank=True) 
+
+    class Meta:
+        db_table = 'lead_notes'

@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from .models import leadDetails, clientDetails, clientProjectDetails,\
-   leadReferances, leadStatus
+   leadReferances, leadStatus, leadNotes
 
 # lead details serializer
 class LeadDetailsSerializer(ModelSerializer):
@@ -33,4 +33,10 @@ class LeadReferancesSerializer(ModelSerializer):
 class LeadStatus(ModelSerializer):
     class Meta:
         model = leadStatus
+        fields = '__all__'
+
+# lead notes
+class LeadNotesSerializer(ModelSerializer):
+    class Meta:
+        model = leadNotes
         fields = '__all__'
