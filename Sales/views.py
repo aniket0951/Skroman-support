@@ -100,6 +100,7 @@ def addProjectDetails(request,lead_id):
 
 # edit client details
 def editClientDetails(request, tag, lead_id):
+    # return JsonResponse(lead_id, safe=False)
     if tag == "show":
         clientData = clientDetails.objects.filter(lead_id=lead_id)
         client_seri = ClientDetailsSerializer(clientData, many=True)
@@ -190,7 +191,9 @@ def addLeadNote(request, lead_id):
     note_data.save()                    
     if note_data:
         leadNotes.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
+        clientDetails.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
+        
         messages.success(request, 'Note added successfully')
-        return JsonResponse(f"{note, next_follow, tied_up_date, isOrderConform, lead_id}", safe=False)
+        return render(request, 'SalesHome.html')
     else:
         return JsonResponse("Not a valid response", safe=False)    
