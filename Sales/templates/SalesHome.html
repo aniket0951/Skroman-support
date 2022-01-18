@@ -21,7 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <!-- handle a screen configration -->
@@ -47,7 +47,15 @@
         .sidebar {
             display: none;
         }
-        #editLead{
+
+        #editLead {
+            display: none;
+        }
+
+        .table_div {
+            display: none;
+        }
+        .parenttab{
             display: none;
         }
     }
@@ -59,11 +67,27 @@
         }
 
         .navigation_bar {
-            margin-left: 0px;
-            background-color: #04aa6d;
+            /* margin-left: 0px;
+            background-color: #04aa6d; */
+            display: none;
         }
 
         .mobile-container {
+            display: block;
+        }
+
+        .mobile-container .topnav {
+            width: 100%;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .table_div {
+            display: none;
+        }
+        .parenttab{
             display: none;
         }
     }
@@ -72,11 +96,34 @@
     @media (min-width: 768px) and (max-width: 1024px) {
         body {
             background-color: blue;
+            
+        }
+
+        .navigation_bar {
+            /* margin-left: 0px;
+            background-color: #04aa6d; */
+            display: none;
         }
 
         .mobile-container {
+            display: block;
+        }
+
+        .mobile-container .topnav {
+            width: 100%;
+        }
+
+        .sidebar {
             display: none;
         }
+
+        .table_div {
+            display: none;
+        }
+        .parenttab{
+            display: none;
+        }
+        
     }
 
     /* Media Query for Laptops and Desktops */
@@ -110,7 +157,7 @@
 
     <!-- sidebar with options -->
     <div class="sidebar">
-        <a class="active" href="#home">HOME</a>
+        <a class="active" href="{% url 'openskroman' %}">HOME</a>
         <a href="{% url 'allUsers' %}">CREATE USER</a>
         <a href="#contact">LEADS</a>
         <a href="#about">TRACK</a>
@@ -120,6 +167,8 @@
         <a href="#about">ACCOUNT</a>
         <a href="#about">INSTALLATION</a>
     </div>
+
+    <!-- this all block for mobile and tab view  -->
 
     <!-- Simulate a smartphone / tablet look -->
     <div class="mobile-container">
@@ -136,7 +185,6 @@
         </div>
         <!-- End smartphone / tablet look -->
     </div>
-    
 
     <!-- show a client details in mobile view using card view -->
     {% for i in client_data %}
@@ -167,15 +215,91 @@
     </div>
     {% endfor %}
 
+    <!-- mobile and tab block end -->
+
+    <!-- this block for large screen for laptop or com -->
+
     <!-- navigation bar -->
-    <nav class="navbar navbar-expand-sm navbar-dark navigation_bar">
-        <div class="container-fluid">
-            <h4 style="color: white; font-family: 'Poppins';">Skroman Support</h4>
-            <a class="navbar-brand" href="#" style="float: right;">
-                <img src="/static/image/skromanlogo.jpeg" alt="Logo" style="width:20px;" class="rounded-pill">
-            </a>
+    <div class="nav_div">
+        <nav class="navbar navbar-expand-sm navbar-dark navigation_bar">
+            <div class="container-fluid">
+                <h4 style="color: white; font-family: 'Poppins';">Skroman Support</h4>
+                <a class="navbar-brand" href="#" style="float: right;">
+                    <img src="/static/image/skromanlogo.jpeg" alt="Logo" style="width:20px;" class="rounded-pill">
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- add client button -->
+    <form action="{% url 'addNewClient' 'show' %}">
+        <button type="submit button" class="btn btn-primary btn-lg add_client_btn">Add Client</button>
+    </form>
+    <!-- show all lead information with data and table view -->
+    <section class="parenttab" >
+        <div class="row child_tab">
+            <div class="col-lg-12 col-md-12">
+                <div class="topnav2">
+                    <a href="">Client Lead Data</a>
+                    <div class="search-container">
+                        <form action="/action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-content" style="margin-top: -10px;">
+                    <!-- Sales Department -->
+                    <div class="table_parent_div  tab-pane active" id="new">
+                        <div class="basic_info_card table_card" id="menu3">
+                            <table class="table table-hover">
+                                <thead> 
+                                    <tr>
+                                        <th scope="col">Client ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Mobile No</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in client_data %}
+                                    <tr>
+                                        <th>{{ i.lead_id }}</th>
+                                        <td>{{ i.c_name }}</td>
+                                        <td>{{ i.c_address }}</td>
+                                        <td>{{ i.c_mobile }}</td>
+                                        <td>{{ i.timestamp }}</td>
+                                        {% if i.lead_status == '1' %}
+                                        <td style="color: yellow;"><strong>Present Lead</strong></td>
+                                        {% elif i.lead_status == '2' %}
+                                        <td style="color: green;"><strong>Active Lead</strong></td>
+                                        {% elif i.lead_status == '3' %}
+                                        <td style="color: orange;"><strong>Dead Lead</strong></td>
+                                        {% elif i.lead_status == '4' %}
+                                        <td style="color: red;"><strong>Closed Lead</strong></td>
+                                        {% endif %}
+                                        <td>
+                                            <a class="button" href="{% url 'editClientDetails' 'show' i.lead_id %}" style="text-decoration: none;">Edit</a>
+                                        </td>
+                                        <td>
+                                            <a class="button" href="#" style="text-decoration: none;">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </nav>
+    </section>
 
     <!-- handling messages -->
     <div style="margin-top: 10px;">

@@ -62,10 +62,12 @@
             margin-right: 15px;
             width: 80%;
         }
-        .lead_lebel{
+
+        .lead_lebel {
             margin-left: 15px;
             margin-top: 10px;
         }
+
         .largerCheckbox {
             width: 20px;
             height: 20px;
@@ -76,7 +78,7 @@
             margin-top: -100px;
         }
 
-        .card{
+        .card {
             margin-right: 18px;
         }
     }
@@ -88,11 +90,20 @@
         }
 
         .navigation_bar {
-            margin-left: 0px;
-            background-color: #04aa6d;
+            /* margin-left: 0px;
+            background-color: #04aa6d; */
+            display: none;
         }
 
         .mobile-container {
+            display: block;
+        }
+
+        .mobile-container .topnav {
+            width: 100%;
+        }
+
+        .sidebar {
             display: none;
         }
     }
@@ -103,7 +114,19 @@
             background-color: blue;
         }
 
+        .navigation_bar {
+            display: none;
+        }
+
         .mobile-container {
+            display: block;
+        }
+
+        .mobile-container .topnav {
+            width: 100%;
+        }
+
+        .sidebar {
             display: none;
         }
     }
@@ -123,14 +146,26 @@
     @media (min-width: 1281px) {
         body {
             background-color: white;
+            padding: 20px;
+        }
+        .navigation_bar {
+            display: none;
         }
 
         .mobile-container {
-            display: none;
+            display: block;
         }
 
-        .card {
+        .mobile-container .topnav {
+            width: 100%;
+        }
+
+        .sidebar {
             display: none;
+        }
+        .form-select{
+            width: 79%;
+            margin-left: 10px;
         }
     }
 </style>
@@ -169,7 +204,7 @@
 
     <!-- show a lead details and implement a edit option -->
     {% for i in client_data %}
-    <form action="{% url 'editClientDetails' 'edit' i.lead_id %}" id="editLead" style="display: block;">
+    <form action="{% url 'editClientDetails' 'edit' i.lead_id %}" id="editLead" style="display: none;">
         <h3 class="form_head">Edit Lead</h3>
         <!-- client details -->
         <div class="form-group">
@@ -236,8 +271,8 @@
 
     <!-- lead follow up and order conformation -->
     {% for i in client_data %}
-    <form action="{% url 'addLeadNote' i.lead_id %}"  style="display: none;" id="addNotes">
-       
+    <form action="{% url 'addLeadNote' i.lead_id %}" style="display: none;" id="addNotes">
+
         <!-- check lead status -->
         {% if i.lead_status == '1' %}
         <label class="lead_lebel" for="" style="color: yellow;"><strong>Present Lead</strong></label>
@@ -250,7 +285,7 @@
         {% endif %}
         <div class="form-group">
             <label for="exampleInputEmail1">Note : </label>
-            <textarea rows="4" class="form-control" cols="50" name="comment" ></textarea>
+            <textarea rows="4" class="form-control" cols="50" name="comment"></textarea>
         </div>
 
         <div class="form-group">
@@ -264,33 +299,35 @@
         </div>
 
         <div class="form-check">
-            <label class="check_txt" >Order Conform : </label>
-            <input class="largerCheckbox"   type="checkbox" value="conform" id="project" name="isOrderConform">
+            <label class="check_txt">Order Conform : </label>
+            <input class="largerCheckbox" type="checkbox" value="conform" id="project" name="isOrderConform">
         </div>
-        
+
 
         <button type="submit" class="btn btn-primary sub_btn">Add Note</button>
     </form>
     {% endfor %}
 
     <!-- showing old notes -->
-    {% for i in note_data %}
-    <div class="card" id="oldNotes">
-        <div class="container">
-            <label for=""><strong>Note Generate:</strong></label>
-            <label for="">{{ i.timestamp }}</label>
+    <div id="oldNote">
+        {% for i in note_data %}
+        <div class="card" style="display: block;">
+            <div class="container">
+                <label for=""><strong>Note Generate:</strong></label><br>
+                <label for="">{{ i.timestamp }}</label><br>
 
-            <label for=""><strong>Next FollowUp Date</strong></label>
-            <p>{{ i.next_follow }}</p>
+                <label for=""><strong>Next FollowUp Date : </strong></label><br>
+                <p>{{ i.next_follow }}</p><br>
 
-            <label for=""><strong>TideUp Date</strong></label>
-            <p>{{ i.tied_up_date }}</p>
+                <label for=""><strong>TideUp Date : </strong></label><br>
+                <p>{{ i.tied_up_date }}</p><br>
 
-            <label for=""><strong>Note :</strong></label>
-            <p>{{ i.note }}</p>
+                <label for=""><strong>Note :</strong></label>
+                <p>{{ i.note }}</p>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 
     <script>
         function myFunction() {
@@ -305,7 +342,7 @@
         function oldNotes() {
             var add_note_btn = document.getElementById('addNotes');
             var edit_lead = document.getElementById('editLead');
-            var old_notes = document.getElementById('oldNotes');
+            var old_notes = document.getElementById('oldNote');
 
             add_note_btn.style.display = 'none';
             edit_lead.style.display = 'none';
@@ -315,17 +352,24 @@
         function editLeads() {
             var add_note_btn = document.getElementById('addNotes');
             var edit_lead = document.getElementById('editLead');
-            var old_notes = document.getElementById('oldNotes');
+            var old_notes = document.getElementById('oldNote');
 
             add_note_btn.style.display = 'none';
             edit_lead.style.display = 'block';
             old_notes.style.display = 'none';
+
+            if (old_notes.style.display === 'block') {
+                old_notes.style.display = 'none';
+            }
+            else {
+                old_notes.style.display = 'none';
+            }
         }
 
-        function addNotes(){
+        function addNotes() {
             var add_note_btn = document.getElementById('addNotes');
             var edit_lead = document.getElementById('editLead');
-            var old_notes = document.getElementById('oldNotes');
+            var old_notes = document.getElementById('oldNote');
 
             add_note_btn.style.display = 'block';
             edit_lead.style.display = 'none';
