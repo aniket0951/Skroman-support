@@ -58,6 +58,12 @@
         .parenttab{
             display: none;
         }
+        .addClientBtn{
+            display: none;
+        }
+        .procced_btn{
+            background-color: green;
+        }
     }
 
     /* Media Query for low resolution  Tablets, Ipads */
@@ -89,6 +95,12 @@
         }
         .parenttab{
             display: none;
+        }
+        .addClientBtn{
+            display: none;
+        }
+        .procced_btn{
+            background-color: green;
         }
     }
 
@@ -162,7 +174,7 @@
         <a href="#contact">LEADS</a>
         <a href="#about">TRACK</a>
         <a href="{% url 'testFuns' %}">SALES</a>
-        <a href="#about">INVANTORY</a>
+        <a href="{% url 'openInvantory' %}">INVANTORY</a>
         <a href="#about">PRODUCTION</a>
         <a href="#about">ACCOUNT</a>
         <a href="#about">INSTALLATION</a>
@@ -199,11 +211,24 @@
             <h4 style="float: right; margin-top: -33px; color: red;"><b>Close Lead</b></h4>
             {% elif i.lead_status == '4' %}
             <h4 style="float: right; margin-top: -33px; color: orange;"><b>Dead Lead</b></h4>
+            {% elif i.lead_status == '5' %}
+            <h4 style="float: right; margin-top: -33px; color: green;"><b>Working Lead</b></h4>
             {% endif %}
             <p>{{ i.c_email }}</p>
             <p>{{ i.c_address }}</p>
             <p>{{ i.c_mobile }}</p>
             <p>{{ i.uptime }}</p>
+            {% if i.lead_status == '2'%}
+            <a style="text-decoration:none; float: right; margin-top: 15px;"
+                href="{% url 'proccedLead' i.lead_id %}">
+                <button type="submit" class="btn btn-primary  d-block btn-lg procced_btn">Procced to Invantory</button>
+            </a>
+            {% elif i.lead_status == '5'%}
+            <a style="text-decoration:none; float: right; margin-top: 15px;"
+                href="#">
+                <button type="submit" class="btn btn-primary  d-block btn-lg procced_btn">Working Lead</button>
+            </a>
+            {% else %}
             <a style="text-decoration:none" href="{% url 'editClientDetails' 'show' i.lead_id %}">
                 <button type="submit" class="btn btn-primary  d-block btn-lg">Edit</button>
             </a>
@@ -211,6 +236,8 @@
                 href="{% url 'deleteLead' i.lead_id 'conform' %}">
                 <button type="submit" class="btn btn-primary  d-block btn-lg delete_btn">Delete</button>
             </a>
+            {% endif %}
+            
         </div>
     </div>
     {% endfor %}
@@ -232,7 +259,7 @@
     </div>
 
     <!-- add client button -->
-    <form action="{% url 'addNewClient' 'show' %}">
+    <form action="{% url 'addNewClient' 'show' %}" class="addClientBtn">
         <button type="submit button" class="btn btn-primary btn-lg add_client_btn">Add Client</button>
     </form>
     <!-- show all lead information with data and table view -->
@@ -241,7 +268,7 @@
             <div class="col-lg-12 col-md-12">
                 <div class="topnav2">
                     <a href="">Client Lead Data</a>
-                    <div class="search-container">
+                    <div class="search-container" >
                         <form action="/action_page.php">
                             <input type="text" placeholder="Search.." name="search">
                             <button type="submit"><i class="fa fa-search"></i></button>
@@ -264,6 +291,7 @@
                                         <th scope="col">Status</th>
                                         <th scope="col">Edit</th>
                                         <th scope="col">Delete</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -282,6 +310,8 @@
                                         <td style="color: orange;"><strong>Dead Lead</strong></td>
                                         {% elif i.lead_status == '4' %}
                                         <td style="color: red;"><strong>Closed Lead</strong></td>
+                                        {% elif i.lead_status == '5' %}
+                                        <td style="color: green;"><strong>Working Lead</strong></td>
                                         {% endif %}
                                         <td>
                                             <a class="button" href="{% url 'editClientDetails' 'show' i.lead_id %}" style="text-decoration: none;">Edit</a>
@@ -289,6 +319,27 @@
                                         <td>
                                             <a class="button" href="#" style="text-decoration: none;">Delete</a>
                                         </td>
+                                        {% if i.lead_status == '1' %}
+                                        <td>
+                                            <a class="button" href="#" style="text-decoration: none;">Verify</a>
+                                        </td>
+                                        {% elif i.lead_status == '2' %}
+                                        <td>
+                                            <a class="button" href="{% url 'proccedLead' i.lead_id %}" style="text-decoration: none;">Proceed</a>
+                                        </td>
+                                        {% elif i.lead_status == '3' %}
+                                        <td>
+                                            <a class="button" href="#" style="text-decoration: none;">Verify</a>
+                                        </td>
+                                        {% elif i.lead_status == '4' %}
+                                        <td>
+                                            <a class="button" href="#" style="text-decoration: none;">Verify</a>
+                                        </td>
+                                        {% elif i.lead_status == '5' %}
+                                        <td>
+                                            <a class="button" href="#" style="text-decoration: none;">Working</a>
+                                        </td>
+                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                     

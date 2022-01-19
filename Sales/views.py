@@ -1,26 +1,26 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import leadDetails, clientDetails, leadReferances, clientProjectDetails,leadNotes
-from .SaleSerializers import LeadDetailsSerializer, ClientDetailsSerializer,\
-                LeadReferancesSerializer, ClientProjectDetailsSer, LeadNotesSerializer
+from .models import leadDetails, clientDetails, leadReferances, clientProjectDetails, leadNotes
+              
+from .SaleSerializers import LeadDetailsSerializer, ClientDetailsSerializer, \
+    LeadReferancesSerializer, ClientProjectDetailsSer, LeadNotesSerializer
+from Admin.models import InternalProcess
 import random
 from django.contrib import messages
 import datetime
 import time
 from django.views.decorators.csrf import csrf_exempt
 from common.Helper import GetCurrentTime
-
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 # Create your views here.
 # show sales depart home screen
-def TestFun(request):
-    clientData = clientDetails.objects.all()
-    client_seri = ClientDetailsSerializer(clientData, many=True)
+class SalesHomeClass(ListView):
+    model = clientDetails
+    template_name = 'SalesHome.html'
+    context_object_name = 'client_data'
 
-    context = {
-        'client_data': client_seri.data
-    }
-    return render(request, 'SalesHome.html', context)
 
 def addNewClient(request, tag):
     if tag == "show":
@@ -37,21 +37,23 @@ def addNewClient(request, tag):
         # generating lead id
         lead_id = ''.join(random.choice('0123456789ABCDEF') for i in range(4))
         lead_id = f"client_{lead_id}"
-        addClient = clientDetails.objects.create(c_name=c_name,c_email=c_email, c_mobile=c_mobile,
+        addClient = clientDetails.objects.create(c_name=c_name, c_email=c_email, c_mobile=c_mobile,
                                                  c_address=c_address, c_site_address=c_site_address,
-                                                 c_type=c_type,lead_id=lead_id, lead_status=1,ctime=localtime,
+                                                 c_type=c_type, lead_id=lead_id, lead_status=1, ctime=localtime,
                                                  timestamp=localtime)
         if addClient:
             return addLeadReferance(request, lead_id)
         else:
             messages.error(request, "Failed to add new client please try again")
-            return render(request, 'SalesHome.html')                                             
-        
-    else:
-        return JsonResponse("Add new client called ", safe=False)   
+            return render(request, 'SalesHome.html')
 
-# add all lead referance details
-def addLeadReferance(request,lead_id):
+    else:
+        return JsonResponse("Add new client called ", safe=False)
+
+    # add all lead referance details
+
+
+def addLeadReferance(request, lead_id):
     referal = request.GET.get('referal', 'default')
     ref_type = request.GET.get('ref_type', 'default')
     ref_name = request.GET.get('ref_name')
@@ -61,10 +63,9 @@ def addLeadReferance(request,lead_id):
     ct = datetime.datetime.now()
     localtime = GetCurrentTime()
 
-
     if referal == "IsReferal":
-        addRefence = leadReferances.objects.create(lead_id=lead_id,ref_type=ref_type,ref_name=ref_name,
-                                                   ref_mobile=ref_number,ref_email=ref_email,ref_address=ref_address,
+        addRefence = leadReferances.objects.create(lead_id=lead_id, ref_type=ref_type, ref_name=ref_name,
+                                                   ref_mobile=ref_number, ref_email=ref_email, ref_address=ref_address,
                                                    lead_status=1, ctime=ct, uptime=ct, timestamp=localtime)
         if addRefence:
             return addProjectDetails(request, lead_id)
@@ -72,11 +73,13 @@ def addLeadReferance(request,lead_id):
             messages.error(request, "Failed to add a lead referances please try again")
             return render(request, 'AddNewClient.html')
     else:
-        return addProjectDetails(request, lead_id)                                                       
+        return addProjectDetails(request, lead_id)
 
-# add project details if client have a project
-def addProjectDetails(request,lead_id):
-    leadFor = request.GET.get('leadFor','default')
+    # add project details if client have a project
+
+
+def addProjectDetails(request, lead_id):
+    leadFor = request.GET.get('leadFor', 'default')
     p_name = request.GET.get('p_name')
     p_site_number = request.GET.get('p_site_number')
     p_address = request.GET.get('p_address')
@@ -84,8 +87,10 @@ def addProjectDetails(request,lead_id):
     localtime = GetCurrentTime()
 
     if leadFor == "Project":
-        addProDetail = clientProjectDetails.objects.create(lead_id=lead_id,project_name=p_name, site_number=p_site_number,
-                                                           project_address=p_address,lead_status=1,ctime=ct, uptime=ct,
+        addProDetail = clientProjectDetails.objects.create(lead_id=lead_id, project_name=p_name,
+                                                           site_number=p_site_number,
+                                                           project_address=p_address, lead_status=1, ctime=ct,
+                                                           uptime=ct,
                                                            timestamp=localtime)
         if addProDetail:
             messages.success(request, 'Client details added successfully')
@@ -95,10 +100,11 @@ def addProjectDetails(request,lead_id):
             return render(request, 'SalesHome.html')
     else:
         messages.error(request, "Failed to add a Project details.Please update the project details")
-        return render(request, 'SalesHome.html')                                   
+        return render(request, 'SalesHome.html')
+
+    # edit client details
 
 
-# edit client details
 def editClientDetails(request, tag, lead_id):
     # return JsonResponse(lead_id, safe=False)
     if tag == "show":
@@ -113,8 +119,8 @@ def editClientDetails(request, tag, lead_id):
         note_ser = LeadNotesSerializer(note_data, many=True)
         context = {
             'client_data': client_seri.data,
-            'project_data' : c_pro_ser.data,
-            'note_data' : note_ser.data
+            'project_data': c_pro_ser.data,
+            'note_data': note_ser.data
         }
         return render(request, 'EditLead.html', context)
     elif tag == "edit":
@@ -134,21 +140,23 @@ def editClientDetails(request, tag, lead_id):
         localtime = time.asctime(time.localtime(time.time()))
 
         clientData = clientDetails.objects.filter(lead_id=lead_id).update(c_name=c_name, c_email=c_email,
-                                                  c_mobile=c_mobile,c_address=c_address,
-                                                  c_site_address=c_site_address,
-                                                  timestamp=localtime)
-        
-        c_pro_data = clientProjectDetails.objects.filter(lead_id=lead_id).update(project_name=p_name,site_number=p_site_number,
-                                                                                 project_address=p_address,timestamp=localtime)
+                                                                          c_mobile=c_mobile, c_address=c_address,
+                                                                          c_site_address=c_site_address,
+                                                                          timestamp=localtime)
+
+        c_pro_data = clientProjectDetails.objects.filter(lead_id=lead_id).update(project_name=p_name,
+                                                                                 site_number=p_site_number,
+                                                                                 project_address=p_address,
+                                                                                 timestamp=localtime)
 
         if clientData and c_pro_data:
             return JsonResponse(c_name, safe=False)
         else:
-            return JsonResponse("Failed to update", safe=False)    
+            return JsonResponse("Failed to update", safe=False)
     else:
         return JsonResponse("Edit client details called", safe=False)
 
-# delete a lead 
+# delete a lead
 def deleteLead(request, lead_id, tag):
     if tag == 'delete':
         del_client = clientDetails.objects.get(lead_id=lead_id)
@@ -169,6 +177,7 @@ def deleteLead(request, lead_id, tag):
     else:
         return JsonResponse(f"not a post method {lead_id}", safe=False)
 
+
 @csrf_exempt
 def addLeadNote(request, lead_id):
     note = request.GET.get('comment')
@@ -183,17 +192,41 @@ def addLeadNote(request, lead_id):
         temp_lead = "2"
     else:
         temp_lead = "1"
-    
 
     note_data = leadNotes(lead_id=lead_id, note=note, next_follow=next_follow,
-                          tied_up_date=tied_up_date, timestamp=time)                      
-    
-    note_data.save()                    
+                          tied_up_date=tied_up_date, timestamp=time)
+
+    note_data.save()
     if note_data:
         leadNotes.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
         clientDetails.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
-        
+        clientProjectDetails.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
+        leadReferances.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
+
         messages.success(request, 'Note added successfully')
         return render(request, 'SalesHome.html')
     else:
-        return JsonResponse("Not a valid response", safe=False)    
+        return JsonResponse("Not a valid response", safe=False)
+
+
+# procced lead to invantory with quatation
+def proccedLead(request,lead_id):
+    time = GetCurrentTime()
+
+    procced = InternalProcess.objects.create(dept_name="Invantory", dept_id=2,
+                                             lead_id=lead_id, process_id=1, process_name="BOM Verification",
+                                             timestamp=time)
+    if procced:
+
+        # update lead status as working lead
+        temp_lead = 5
+        leadNotes.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
+        clientDetails.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
+        clientProjectDetails.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
+        leadReferances.objects.filter(lead_id=lead_id).update(lead_status=temp_lead)
+
+        messages.success(request, "Lead procced to invantory successfully")
+        return redirect('testFuns')
+    else:
+        messages.error(request, "Failed to procced to invantory. Please try again")
+        return redirect('testFuns')    

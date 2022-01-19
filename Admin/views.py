@@ -12,7 +12,7 @@ from .Serializers import LoginSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 import json
-
+from django.views.generic.list import ListView
 
 # Create your views here.
 def TestFun(request):
