@@ -11,6 +11,9 @@ body {
   background-color: #f1f1f1;
   position: fixed;
   height: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
   overflow: auto;
 }
 
@@ -130,12 +133,13 @@ div.content {
 }
 .navigation_bar {
   position: fixed;
-  margin-left: 160px;
+  margin-left: 150px;
   background-color: #04aa6d;
 }
 .nav_div{
   position: fixed;
   width: 100%;
+  top: 0;
 }
 
 /* table view */
