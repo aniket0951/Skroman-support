@@ -1,6 +1,94 @@
 {% extends 'CommonTemp.html' %}
-{% block content %}
-<h4 style="margin-left: 210px; margin-top: 120px;">ANiket</h4>
-{% endblock content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-   
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <link rel="stylesheet" href="/static/css/invantory.css">
+</head>
+
+<body>
+    {% block content %}
+
+    <section class="parenttab">
+        <div class="row child_tab">
+            <div class="col-lg-12 col-md-12">
+                <div class="topnav2">
+                    <a href="">Client Lead Data</a>
+                    <div class="search-container">
+                        <form action="/action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-content" style="margin-top: -10px;">
+                    <!-- Sales Department -->
+                    <div class="table_parent_div  tab-pane active" id="new">
+                        <div class="basic_info_card table_card" id="menu3">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Client ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Mobile No</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Request Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in client_details %}
+                                    {% for j in i %}
+                                    <tr>
+                                        <th>{{ j.lead_id }}</th>
+                                        <td>{{ j.c_name }}</td>
+                                        <td>{{ j.c_address }}</td>
+                                        <td>{{ j.c_mobile }}</td>
+                                        <td>{{ j.timestamp }}</td>
+                                        {% if j.lead_status == '1' %}
+                                        <td style="color: yellow;"><strong>Present Lead</strong></td>
+                                        {% elif j.lead_status == '2' %}
+                                        <td style="color: green;"><strong>Active Lead</strong></td>
+                                        {% elif j.lead_status == '3' %}
+                                        <td style="color: orange;"><strong>Dead Lead</strong></td>
+                                        {% elif j.lead_status == '4' %}
+                                        <td style="color: red;"><strong>Closed Lead</strong></td>
+                                        {% elif j.lead_status == '5' %}
+                                        <td style="color: green;"><strong>Working Lead</strong></td>
+                                        {% endif %}
+                                        
+                                        {% for k in invantory_data|slice:j %}
+                                        {% if k.lead_id == j.lead_id%}
+                                        <td>
+                                            <a  href="#" style="text-decoration: none;">{{ k.process_name }}</a>
+                                        </td>
+                                        {% endif %}
+                                        {% endfor %}
+                                        
+                                    </tr>
+                                    
+                                    {% endfor %}
+                                    {% endfor %}
+
+                                    
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% endblock %}
+</body>
+
+</html>
