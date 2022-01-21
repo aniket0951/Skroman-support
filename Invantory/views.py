@@ -3,7 +3,8 @@ from Admin.models import InternalProcess
 from Sales.models import clientDetails
 from django.views.generic.list import ListView
 from Admin.Serializers import InternalProcessSer
-
+from .models import TwoMESP32
+from django.http import HttpResponse, JsonResponse
 # Create your views here.
 class InvantoryHomeClass(ListView):
     queryset = InternalProcess.objects.all()
@@ -21,3 +22,14 @@ class InvantoryHomeClass(ListView):
             
         return context
 
+class BOMListClass(ListView):
+    model = TwoMESP32
+    template_name = "BOM.html"
+    context_object_name = 'bom_data'
+
+def AddBOM(request):
+    data = TwoMESP32(Name="Aniket").save()
+    if data:
+        return JsonResponse("Data inserted successfully", safe=False)
+    else:
+        return JsonResponse("Failed to insert", safe=False)    

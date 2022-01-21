@@ -23,6 +23,88 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<!-- handle a screen configration -->
+<style>
+    /* Media Query for Mobile Devices */
+    @media (max-width: 480px) {
+        body {
+            /* background-color: red; */
+            background-color: #cee1ed;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .nav_div {
+            display: none;
+        }
+    }
+
+    /* Media Query for low resolution  Tablets, Ipads */
+    @media (min-width: 481px) and (max-width: 767px) {
+        body {
+            background-color: yellow;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .nav_div {
+            display: none;
+        }
+    }
+
+    /* Media Query for Tablets Ipads portrait mode */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        body {
+            background-color: blue;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .nav_div {
+            display: none;
+        }
+    }
+
+    /* Media Query for Laptops and Desktops */
+    @media (min-width: 1025px) and (max-width: 1280px) {
+        body {
+            background-color: green;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+
+        .sidebar {
+            display: block;
+        }
+
+        .nav_div {
+            display: block;
+        }
+    }
+
+    /* Media Query for Large screens */
+    @media (min-width: 1281px) {
+        body {
+            background-color: white;
+        }
+
+        .sidebar {
+            display: block;
+        }
+
+        .nav_div {
+            display: block;
+        }
+    }
+</style>
 
 <body>
 
@@ -39,8 +121,8 @@
         <a href="#about">INSTALLATION</a>
     </div>
 
-    <div class="nav_div">
-        <nav class="navbar navbar-expand-sm navbar-dark navigation_bar">
+    <div class="nav_div" id="header">
+        <nav class="navbar navbar-expand-sm navbar-dark navigation_bar" >
             <div class="container-fluid">
                 <h4 style="color: white; font-family: 'Poppins';">Skroman Support</h4>
                 <a class="navbar-brand" href="#" style="float: right;">
@@ -57,12 +139,17 @@
 
 
 
-    <!-- navigation bar -->
+    <script>
+        window.onscroll = function () { scrollFunction() };
 
-
-
-
-
+        function scrollFunction() {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                document.getElementById("header").style.fontSize = "30px";
+            } else {
+                document.getElementById("header").style.fontSize = "90px";
+            }
+        }
+    </script>
 
 
 </body>

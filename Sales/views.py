@@ -34,13 +34,15 @@ def addNewClient(request, tag):
         c_site_address = request.GET.get('c_site_address')
         localtime = GetCurrentTime()
 
+        sales_user_id = request.COOKIES.get('sales_user_id')
+
         # generating lead id
         lead_id = ''.join(random.choice('0123456789ABCDEF') for i in range(4))
         lead_id = f"client_{lead_id}"
         addClient = clientDetails.objects.create(c_name=c_name, c_email=c_email, c_mobile=c_mobile,
                                                  c_address=c_address, c_site_address=c_site_address,
                                                  c_type=c_type, lead_id=lead_id, lead_status=1, ctime=localtime,
-                                                 timestamp=localtime)
+                                                 timestamp=localtime, sales_person=sales_user_id)
         if addClient:
             return addLeadReferance(request, lead_id)
         else:

@@ -28,6 +28,7 @@ class clientDetails(models.Model):
     ctime = models.DateTimeField(auto_now_add=True)
     uptime = models.DateTimeField(auto_now=True)
     timestamp = models.CharField(max_length=60, null=True, blank=True)
+    sales_person = models.CharField(max_length=130, null=True, blank=True)
 
     class Meta:
         db_table = 'client_details'

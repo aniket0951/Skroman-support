@@ -1,4 +1,4 @@
-{% extends 'CommonTemp.html' %}
+{% include 'CommonTemp.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +14,12 @@
 <body>
     {% block content %}
 
+    <!-- for add BOM  -->
+    <form action="{% url 'BOMListClass' %}" class="addClientBtn">
+        <button type="submit button" class="btn btn-primary btn-lg add_client_btn">Add BOM</button>
+    </form>
+    
+    <!-- showing all lead data with status -->
     <section class="parenttab">
         <div class="row child_tab">
             <div class="col-lg-12 col-md-12">
