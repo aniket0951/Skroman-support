@@ -40,14 +40,15 @@ def LoginUser(request):
             otp = generateOTP()
             if SendOTP(email, request, otp):
                 login = LoginModel.objects.filter(email=email).update(user_otp=otp)
-                data = LoginSerializer(login, many=True)
+                loginData = LoginModel.objects.filter(email=email)
+                data = LoginSerializer(loginData, many=True)
 
-                auth_token = data.data['auth_token']
+                auth_token = data.data[0]['auth_token']
                 
                 messages.info(request, f"{email} {otp}")
                 response = render(request, 'Verify.html')
                 response.set_cookie('email', email)
-                response.set_cookie('sales_user_id', auth_token)
+                response.set_cookie('sales_user_id',  auth_token)
                 return response
             else:
                 messages.error(request, "Failed to send a verification code please try again.")

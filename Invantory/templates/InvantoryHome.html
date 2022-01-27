@@ -10,17 +10,163 @@
     <title>Inventory</title>
     <link rel="stylesheet" href="/static/css/invantory.css">
 </head>
+<!-- handle a screen configration -->
+<style>
+    /* Media Query for Mobile Devices */
+    @media (max-width: 480px) {
+        body {
+            /* background-color: red; */
+            background-color: #cee1ed;
+            ;
+        }
+
+        .navigation_bar {
+            /* margin-left: 0px;
+            background-color: #04aa6d; */
+            display: none;
+        }
+
+        .mobile-container {
+            display: block;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        #editLead {
+            display: none;
+        }
+
+        .table_div {
+            display: none;
+        }
+
+        .parenttab {
+            display: none;
+        }
+
+        .addClientBtn {
+            display: none;
+        }
+
+        .procced_btn {
+            background-color: green;
+        }
+    }
+
+    /* Media Query for low resolution  Tablets, Ipads */
+    @media (min-width: 481px) and (max-width: 767px) {
+        body {
+            background-color: yellow;
+        }
+
+        .parenttab {
+            margin-left: 160px;
+        }
+
+        .sidebar {
+            display: block;
+        }
+
+        .nav_div {
+            display: block;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+
+        .topnav #myLinks {
+            display: block;
+        }
+
+        .topnav .active {
+            background-color: green;
+        }
+    }
+
+    /* Media Query for Tablets Ipads portrait mode */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        body {
+            background-color: blue;
+
+        }
+
+        .parenttab {
+            margin-left: 160px;
+        }
+
+        .sidebar {
+            display: block;
+        }
+
+        .nav_div {
+            display: block;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+
+        .topnav #myLinks {
+            display: block;
+        }
+
+        .topnav .active {
+            background-color: green;
+        }
+
+    }
+
+    /* Media Query for Laptops and Desktops */
+    @media (min-width: 1025px) and (max-width: 1280px) {
+        body {
+            background-color: green;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+
+        .parenttab {
+            margin-left: 180px;
+        }
+    }
+
+    /* Media Query for Large screens */
+    @media (min-width: 1281px) {
+        body {
+            background-color: white;
+        }
+
+        .mobile-container {
+            display: none;
+        }
+
+        .card {
+            display: none;
+        }
+    }
+</style>
 
 <body>
     {% block content %}
 
-    <!-- for add BOM  -->
-    <form action="{% url 'BOMListClass' %}" class="addClientBtn">
-        <button type="submit button" class="btn btn-primary btn-lg add_client_btn">Add BOM</button>
-    </form>
-    
-    <!-- showing all lead data with status -->
-    <section class="parenttab">
+    <!-- add bom button -->
+    <div>
+        <form action="javascript:addBOM()" class="addClientBtn" id="addClientBtn">
+            <button type="Submit" class="btn btn-primary btn-lg add_client_btn" >Add
+                BOM</button>
+        </form>
+        <!-- show bom list -->
+        <form action="{% url 'BOMListClass' %}" class="addClientBtn" id="showBOMbtn">
+            <button type="submit button" class="btn btn-primary btn-lg add_client_btn">Show BOM</button>
+        </form>
+    </div>
+
+    <!-- inventory lead data -->
+    <section class="parenttab" id="inventoryData">
         <div class="row child_tab">
             <div class="col-lg-12 col-md-12">
                 <div class="topnav2">
@@ -69,21 +215,21 @@
                                         {% elif j.lead_status == '5' %}
                                         <td style="color: green;"><strong>Working Lead</strong></td>
                                         {% endif %}
-                                        
+
                                         {% for k in invantory_data|slice:j %}
                                         {% if k.lead_id == j.lead_id%}
                                         <td>
-                                            <a  href="#" style="text-decoration: none;">{{ k.process_name }}</a>
+                                            <a href="{% url 'bom_verification' 'show' k.lead_id %}" style="text-decoration: none;">{{ k.process_name }}</a>
                                         </td>
                                         {% endif %}
                                         {% endfor %}
-                                        
+
                                     </tr>
-                                    
+
                                     {% endfor %}
                                     {% endfor %}
 
-                                    
+
 
                                 </tbody>
                             </table>
@@ -93,6 +239,134 @@
             </div>
         </div>
     </section>
+
+    <!-- view for add a item in bom list -->
+    <div class="card form_card" style="display: none;" id="newCard">
+        <div class="card-body">
+            <h5 class="card-title">Add New component for device</h5>
+            <form action="{% url 'addBOM' %}">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" class="form-control" name="c_name" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Enter component name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Quantity</label>
+                    <input type="text" class="form-control" name="quantity" id="exampleInputPassword1" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Value</label>
+                    <input type="text" class="form-control" name="c_value" id="exampleInputPassword1" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Pattern</label>
+                    <input type="text" class="form-control" name="pattern" id="exampleInputPassword1" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">RefDes</label>
+                    <input type="text" class="form-control" name="ref_des" id="exampleInputPassword1" placeholder="">
+                </div>
+
+                <!-- for which device -->
+                <div class="mb-3" id="dropDown2">
+                    <label for="pwd" class="form-label">Device Type:</label>
+                    <select id="list" class="form-select" name="device_type" aria-label="Default select example">
+                        <option value="2MESP32">2MESP32</option>
+                        <option value="4MESP32">4MESP32</option>
+                        <option value="6MESP32">6MESP32</option>
+                        <option value="8MESP32">8MESP32</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add BOM</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- handling messages -->
+    <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "error"%}
+        <script>
+            swal({
+                icon: 'warning',
+                text: '{{ message }}',
+                buttons: {
+                    cancel: "Cancel",
+                    catch: {
+                        text: "Next",
+                        value: "catch",
+                    }
+                },
+            })
+                .then((value) => {
+                    switch (value) {
+                        case "catch":
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                        default:
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                    }
+                });
+        </script>
+        {% else %}
+        <script>
+            swal({
+                icon: '/static/image/login_success.png',
+                text: '{{ message }}',
+                buttons: {
+                    cancel: "Cancel",
+                    catch: {
+                        text: "Done",
+                        value: "catch",
+                    }
+                },
+            })
+                .then((value) => {
+                    switch (value) {
+                        case "catch":
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                        default:
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                    }
+                });
+        </script>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        function addBOM() {
+            var x = document.getElementById("newCard")
+            var inventoryData = document.getElementById("inventoryData")
+            var addClientBtn = document.getElementById("addClientBtn")
+            var showBOMbtn = document.getElementById('showBOMbtn')
+
+            if (x.style.display == 'block') {
+                x.style.display = 'none';
+                // visible a add bom btn and inventory card 
+                addClientBtn.style.display = 'block';
+                inventoryData.style.display = 'block';
+                showBOMbtn.style.display = 'block';
+            }
+            else {
+                x.style.display = 'block'
+                inventoryData.style.display = 'none';
+                addClientBtn.style.display = 'none';
+                showBOMbtn.style.display = 'none';
+            }
+        }
+
+
+    </script>
 
     {% endblock %}
 </body>

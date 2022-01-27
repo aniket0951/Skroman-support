@@ -9,3 +9,11 @@ a.button{
     margin-top: 0px;
 
 }
+.form_card{
+    width: 80%;
+    margin-left: 220px;
+    margin-top: 120px;
+}
+.form-group{
+    padding: 5px;
+}
