@@ -1,0 +1,161 @@
+{% include 'CommonTemp.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM Verification</title>
+    <link rel="stylesheet" href="/static/css/bom.css">
+
+</head>
+
+<body>
+
+    {% block content %}
+
+    <!-- view for add a item in bom list -->
+    <!-- inventory lead data -->
+    <section class="parenttab" id="inventoryData">
+        <div class="row child_tab">
+            <div class="col-lg-12 col-md-12">
+                <div class="topnav2">
+                    <a href="">Device List</a>
+                    <div class="search-container">
+                        <form action="/action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-content" style="margin-top: -10px;">
+                    <!-- Sales Department -->
+                    <div class="table_parent_div  tab-pane active" id="new">
+                        <div class="basic_info_card table_card" id="menu3">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Client ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Device Type</th>
+                                        <th scope="col">Model Name</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Unit Price</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">BOM Verification</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in verification_data %}
+                                    {% if i.bom_verification == '1'%}
+                                    <tr style="background-color: green; color: white;">
+                                        <td>{{ i.lead_id }}</td>
+                                        <td>{{ i.client_name }}</td>
+                                        <td>{{ i.device_type }}</td>
+                                        <td>{{ i.model_name }}</td>
+                                        <td>{{ i.quantity }}</td>
+                                        <td>{{ i.unit_price }}</td>
+                                        <td>{{ i.price }}</td>
+                                        {% if i.bom_verification == '1' %}
+                                        <td>Verified</td>
+                                        {% endif %}
+                                    </tr>
+                                    {% elif i.bom_verification == '0' %}
+                                    <tr style="background-color: orange; color: white;">
+                                        <td>{{ i.lead_id }}</td>
+                                        <td>{{ i.client_name }}</td>
+                                        <td>{{ i.device_type }}</td>
+                                        <td>{{ i.model_name }}</td>
+                                        <td>{{ i.quantity }}</td>
+                                        <td>{{ i.unit_price }}</td>
+                                        <td>{{ i.price }}</td>
+                                        {% if i.bom_verification == '0' %}
+                                        <td>
+                                            <a href="{% url 'bom_verification' i.quantity i.model_name %}"
+                                                style="text-decoration: none;">Pending</a>
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- showing bom list for specific model which is selected by user -->
+    <section class="parenttab" id="bomVerificationSection" style="display: none;">
+        <div class="row child_tab">
+            <div class="col-lg-12 col-md-12">
+                <div class="topnav2">
+                    <a href="">BOM List</a>
+                    <div class="search-container">
+                        <form action="/action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-content" style="margin-top: -10px;">
+                    <!-- Sales Department -->
+                    <div class="table_parent_div  tab-pane active" id="new">
+                        <div class="basic_info_card table_card" id="menu3">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Value</th>
+                                        <th scope="col">Pattern</th>
+                                        <th scope="col">RefDes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in bom_data %}
+                                    <tr>
+                                        <td>{{ i.Name }}</td>
+                                        <td>{{ i.data_quantity }}</td>
+                                        <td>{{ i.Value }}</td>
+                                        <td>{{ i.Pattern }}</td>
+                                        <td>{{ i.RefDes }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- handling message and validation visible and invisible view -->
+    <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "info"%}
+        <script>
+            var parenttab = document.getElementById('inventoryData');
+            var bomVerificationSection = document.getElementById('bomVerificationSection');
+            parenttab.style.display = 'none';
+            bomVerificationSection.style.display = 'block';
+        </script>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    {% endblock %}
+
+</body>
+
+</html>

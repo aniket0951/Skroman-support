@@ -41,5 +41,13 @@ body {
 #dropDown2 {
   display: none;
 }
+.form_class{
+  margin-left: 310px;
+  margin-top: 60px;
+}
+#dropDown1{
+  width: 80%;
+  margin-left: -10px;
+}
 
 
