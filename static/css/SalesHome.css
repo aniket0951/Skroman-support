@@ -251,7 +251,7 @@ td {
   color: #333333;
   opacity: 1;
 }
-.table_parent_div .table_card {
+/* .table_parent_div .table_card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 10px 0;
   box-sizing: border-box;
@@ -259,7 +259,7 @@ td {
   border: 1px solid #fff;
   overflow-y: scroll;
   height: 600px;
-}
+} */
 
 .table_card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);

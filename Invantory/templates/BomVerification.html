@@ -16,8 +16,7 @@
 
     {% block content %}
 
-    <!-- view for add a item in bom list -->
-    <!-- inventory lead data -->
+    <!-- showing all device list which is getting by quatation -->
     <section class="parenttab" id="inventoryData">
         <div class="row child_tab">
             <div class="col-lg-12 col-md-12">
@@ -60,7 +59,10 @@
                                         <td>{{ i.unit_price }}</td>
                                         <td>{{ i.price }}</td>
                                         {% if i.bom_verification == '1' %}
-                                        <td>Verified</td>
+                                        <td>
+                                            <a href="{% url 'showComponentInfo' i.model_name i.quantity i.device_id %}"
+                                                style="text-decoration: none; color: white;">Verified</a>
+                                        </td>
                                         {% endif %}
                                     </tr>
                                     {% elif i.bom_verification == '0' %}
@@ -74,8 +76,8 @@
                                         <td>{{ i.price }}</td>
                                         {% if i.bom_verification == '0' %}
                                         <td>
-                                            <a href="{% url 'bom_verification' i.quantity i.model_name %}"
-                                                style="text-decoration: none;">Pending</a>
+                                            <a href="{% url 'showComponentInfo' i.model_name i.quantity i.device_id %}"
+                                                style="text-decoration: none; color: white;">Pending</a>
                                         </td>
                                         {% endif %}
                                     </tr>
@@ -83,6 +85,11 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+
+                            <!-- button for procussed to production -->
+                            {% if verification_data%}
+                            <a href="{% url 'proceed_production' verification_data.0.lead_id %}"  class="button processedbtn">Proceed Production</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -130,13 +137,23 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                            {% for i in device_data %}
+                            {% if i.bom_verification == '0' %}
+                            <form action="{% url 'bom_verification' 'verify' i.device_id %}" class="verifybtn1">
+                                <button type="Submit" class="btn btn-lg verifybtn">Verify</button>
+                            </form>
+                            {% else %}
+                            <form action="#" class="verifybtn1">
+                                <button type="Submit" class="btn btn-lg verifiedbtn">Verified</button>
+                            </form>
+                            {% endif%}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 
     <!-- handling message and validation visible and invisible view -->
     <div style="margin-top: 10px;">
