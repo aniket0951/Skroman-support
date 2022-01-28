@@ -60,7 +60,7 @@ class ProductDetails(models.Model):
     uptime = models.DateTimeField(auto_now=True)
     timestamp = models.CharField(max_length=210, null=True, blank=True)
     bom_verification = models.CharField(max_length=210, null=True, blank=True)
-
+    device_id = models.CharField(max_length=120, null=True, blank=True)
 
     class Meta:
         db_table = 'product_details'

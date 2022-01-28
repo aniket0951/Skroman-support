@@ -18,3 +18,36 @@
 .parenttab{
     margin-top: 70px;
 }
+.verifybtn{
+    background-color: orange;
+    color: white;
+    float: right;
+    margin-right: 15px;
+    font-family: 'Courier New', Courier, monospace;
+
+}
+.verifybtn:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+.verifiedbtn{
+    background-color: green;
+    color: white;
+    float: right;
+    margin-right: 15px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.verifiedbtn:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+.processedbtn{
+    text-decoration: none; 
+    color: white;
+    float: right;
+    width: 15%;
+    margin-right: 15px;
+    background-color: skyblue;
+    font-family: 'Courier New', Courier, monospace;
+}
+.processedbtn:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+}

@@ -110,15 +110,20 @@
 
     <!-- sidebar with options -->
     <div class="sidebar">
+        {% if department == 'Production' %}
+        <a class="active" href="#test" >Production </a>
+        <a href="#test" >Production </a>
+        {% else %}
         <a class="active" href="{% url 'openskroman' %}">HOME</a>
         <a href="{% url 'allUsers' %}">CREATE USER</a>
         <a href="#contact">LEADS</a>
         <a href="#about">TRACK</a>
         <a href="{% url 'testFuns' %}">SALES</a>
         <a href="{% url 'openInvantory' %}">INVANTORY</a>
-        <a href="#about">PRODUCTION</a>
-        <a href="#about">ACCOUNT</a>
+        <a href="{% url 'production_home' %}">PRODUCTION</a>
+        <a href="#about" id="account">ACCOUNT</a>
         <a href="#about">INSTALLATION</a>
+        {% endif %}
     </div>
 
     <!-- Simulate a smartphone / tablet look -->
