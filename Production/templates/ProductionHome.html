@@ -2,21 +2,115 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production Home</title>
 </head>
+
 <body>
-    <h1>Production Home get called</h1>
-    {% for i in client_details %}
-    {% for j in i %}
-    <h3>{{ j.c_name }}</h3>
-    {% endfor %}
-    {% endfor %}
-    <script>
-        
-    </script>
+
+    {% block content %}
+
+    <section class="parenttab" id="inventoryData">
+        <div class="row child_tab">
+            <div class="col-lg-12 col-md-12">
+                <div class="topnav2">
+                    <a href="">Client Lead Data</a>
+                    <div class="search-container">
+                        <form action="/action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-content" style="margin-top: -10px;">
+                    <!-- Sales Department -->
+                    <div class="table_parent_div  tab-pane active" id="new">
+                        <div class="basic_info_card table_card" id="menu3">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Client ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Device ID</th>
+                                        <th scope="col">Model</th>
+                                        <th scope="col">Model Name</th>
+                                        <th scope="col">BOM Verification</th>
+                                        <th scope="col">Soldering</th>
+                                        <th scope="col">Inspection</th>
+                                        <th scope="col">Programing</th>
+                                        <th scope="col">Testing</th>
+                                        <th scope="col">Final Testing</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in production_data %}
+                                    <tr>
+                                        <th>{{ i.lead_id }}</th>
+                                        <!-- get client name from another tab -->
+
+                                        {% if i.lead_id == client_details.0.0.lead_id %}
+                                        <td>{{ client_details.0.0.c_name}}</td>
+                                        {% endif %}
+
+                                        <td>{{ i.device_id }}</td>
+                                        <td>{{ i.model }}</td>
+                                        <td>{{ i.model_name }}</td>
+
+                                        {% if i.bom_verification == '0' %}
+                                        <td>Pending</td>
+                                        {% else %}
+                                        <td>Verified</td>
+                                        {% endif %}
+
+                                        {% if i.is_soldring == '0' %}
+                                        <td>Pending</td>
+                                        {% else %}
+                                        <td>Verified</td>
+                                        {% endif %}
+
+                                        {% if i.is_visual_inspection == '0' %}
+                                        <td>Pending</td>
+                                        {% else %}
+                                        <td>Verified</td>
+                                        {% endif %}
+
+                                        {% if i.is_programing == '0' %}
+                                        <td>Pending</td>
+                                        {% else %}
+                                        <td>Verified</td>
+                                        {% endif %}
+
+                                        {% if i.is_testing == '0' %}
+                                        <td>Pending</td>
+                                        {% else %}
+                                        <td>Verified</td>
+                                        {% endif %}
+
+                                        {% if i.is_f_testing == '0' %}
+                                        <td>Pending</td>
+                                        {% else %}
+                                        <td>Verified</td>
+                                        {% endif %}
+
+                                    </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% endblock %}
 </body>
+
 </html>
