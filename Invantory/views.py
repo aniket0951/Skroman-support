@@ -9,7 +9,7 @@ from django.contrib import messages
 from .InventorySerializers import ProductDetailsSerializer, TwoMESP32Ser, FourMESP32Ser, SixMESP32Ser,\
                                   EightMESP32Ser 
 from common.Helper import GetCurrentTime
-
+from Production.models import ProductionExternalProcess
 
 # Create your views here.
 class InvantoryHomeClass(ListView):
@@ -144,7 +144,7 @@ def ProceedProduction(request, lead_id):
     # first check all device bom is verified
     bom = ProductDetails.objects.filter(lead_id=lead_id)
     bomSer = ProductDetailsSerializer(bom, many=True)
-
+    
     for i in bomSer.data:
         if i['bom_verification'] == '0':
             messages.error(request, "BOM Verification is Pending Please verify all bom list.")
@@ -152,13 +152,24 @@ def ProceedProduction(request, lead_id):
 
     time = GetCurrentTime()        
 
-    # if all bom list is verified then change the internal process status
+    # if all bom list is verified then change the internal process status make inventory to production
     internal_pro = InternalProcess.objects.filter(lead_id=lead_id).update(dept_name="Production",
                                                                           dept_id=3, process_id=2,
                                                                           process_name='In Production',
                                                                           timestamp=time)
 
+
     if internal_pro:
+
+        # update the production external process for better understanding
+        for i in bomSer.data:
+            # get all device of selected lead
+            device_id = i['device_id']   
+            prod_ext_process = ProductionExternalProcess(lead_id=lead_id, device_id=device_id,
+                                                     is_soldring=0,is_visual_inspection=0,is_programing=0,
+                                                     is_testing=0,is_f_testing=0,timestamp=time,
+                                                     bom_verification=0).save()
+                                                     
         messages.success(request, "Lead proceed to production successfully")        
         return redirect('/invantoryUser/invantoryHome/')
     else:

@@ -6,17 +6,18 @@ from common.Helper import GetCurrentTime
 from Admin.models import InternalProcess
 from Admin.Serializers import InternalProcessSer
 from Sales.models import clientDetails
-
+from .models import ProductionExternalProcess
+from .ProductionSerializer import *
 
 # Create your views here.
 class ProductionHomeClass(ListView):
-    queryset = InternalProcess.objects.filter(process_id=2)
+    queryset = ProductionExternalProcess.objects.all()
     template_name = 'ProductionHome.html'
     context_object_name = 'production_data'
 
     def get_context_data(self, **kwargs):
         context = super(ProductionHomeClass, self).get_context_data(**kwargs)
-        data = InternalProcessSer(self.queryset, many=True)
+        data = ProductionExternalSer(self.queryset, many=True)
         dataList = []
         for i in data.data:
             dataList.append(clientDetails.objects.filter(lead_id=i['lead_id']))
