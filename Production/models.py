@@ -105,3 +105,49 @@ class FinalTesting(models.Model):
 
     class Meta:
         db_table = 'production_final_testing'
+
+
+# for production user add/show
+class ProductionUser(models.Model):
+    emp_name = models.CharField(max_length=260, null=True, blank=True)
+    emp_id = models.CharField(max_length=260, null=True, blank=True)
+    emailId = models.CharField(max_length=260, null=True, blank=True)
+    emp_contact = models.CharField(max_length=260, null=True, blank=True)
+    designation = models.CharField(max_length=260, null=True, blank=True)
+    department = models.CharField(max_length=260, null=True, blank=True)
+    work_for = models.CharField(max_length=260, null=True, blank=True)
+    emp_status = models.CharField(max_length=260, null=True, blank=True)
+    password = models.CharField(max_length=140, null=True, blank=True)
+    auth_token = models.CharField(max_length=140, null=True, blank=True)
+
+    class Meta:
+        db_table = 'production_user'
+
+# to count a daily work or current day work how much task is assign
+class WorkingCount(models.Model):
+    auth_token = models.CharField(max_length=140, null=True, blank=True)
+    working_date = models.CharField(max_length=140, null=True, blank=True)
+    task_count = models.CharField(max_length=40, null=True, blank=True)
+    class Meta:
+        db_table = 'working_count'
+
+# for current working tasks
+class CurrentWorkingTasks(models.Model):
+    auth_token = models.CharField(max_length=140, null=True, blank=True)
+    task_name = models.CharField(max_length=140, null=True, blank=True)
+    task_id = models.CharField(max_length=140, null=True, blank=True)
+    task_date = models.CharField(max_length=140, null=True, blank=True)
+    task_status = models.CharField(max_length=10, null=True, blank=True)
+    class Meta:
+        db_table = 'current_working_task'
+
+# completed working task by production
+class CompletedTask(models.Model):
+    auth_token = models.CharField(max_length=140, null=True, blank=True)
+    task_name = models.CharField(max_length=140, null=True, blank=True)
+    task_id = models.CharField(max_length=140, null=True, blank=True)
+    task_date = models.CharField(max_length=140, null=True, blank=True)
+    task_status = models.CharField(max_length=10, null=True, blank=True)
+    task_time = models.CharField(max_length=140, null=True, blank=True)
+    class Meta:
+        db_table = 'completed_working_task'

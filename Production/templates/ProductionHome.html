@@ -45,6 +45,7 @@
                                         <th scope="col">Programing</th>
                                         <th scope="col">Testing</th>
                                         <th scope="col">Final Testing</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,40 +63,46 @@
                                         <td>{{ i.model_name }}</td>
 
                                         {% if i.bom_verification == '0' %}
-                                        <td>Pending</td>
+                                        <td style="color: red;">Pending</td>
                                         {% else %}
-                                        <td>Verified</td>
+                                        <td style="color: green; font-weight: bold;">Verified</td>
                                         {% endif %}
 
                                         {% if i.is_soldring == '0' %}
-                                        <td>Pending</td>
+                                        <td style="color: red;">Pending</td>
                                         {% else %}
-                                        <td>Verified</td>
+                                        <td style="color: green; font-weight: bold;">Verified</td>
                                         {% endif %}
 
                                         {% if i.is_visual_inspection == '0' %}
-                                        <td>Pending</td>
+                                        <td style="color: red;">Pending</td>
                                         {% else %}
-                                        <td>Verified</td>
+                                        <td style="color: green; font-weight: bold;">Verified</td>
                                         {% endif %}
 
                                         {% if i.is_programing == '0' %}
-                                        <td>Pending</td>
+                                        <td style="color: red;">Pending</td>
                                         {% else %}
-                                        <td>Verified</td>
+                                        <td style="color: green; font-weight: bold;">Verified</td>
                                         {% endif %}
 
                                         {% if i.is_testing == '0' %}
-                                        <td>Pending</td>
+                                        <td style="color: red;">Pending</td>
                                         {% else %}
-                                        <td>Verified</td>
+                                        <td style="color: green; font-weight: bold;">Verified</td>
                                         {% endif %}
 
                                         {% if i.is_f_testing == '0' %}
-                                        <td>Pending</td>
+                                        <td style="color: red;">Pending</td>
                                         {% else %}
-                                        <td>Verified</td>
+                                        <td style="color: green; font-weight: bold;">Verified</td>
                                         {% endif %}
+
+                                        <td>
+                                        <a href="{% url 'work_on_device' i.lead_id i.device_id %}" style="text-decoration: none;">
+                                            <button type="submit"  class="btn btn-primary">Work</button>
+                                        </a>
+                                    </td>
 
                                     </tr>
 
@@ -109,6 +116,64 @@
             </div>
         </div>
     </section>
+
+    
+    <!-- handling messages -->
+    <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "error"%}
+        <script>
+            swal({
+                icon: 'warning',
+                text: '{{ message }}',
+                buttons: {
+                    cancel: "Cancel",
+                    catch: {
+                        text: "Next",
+                        value: "catch",
+                    }
+                },
+            })
+                .then((value) => {
+                    switch (value) {
+                        case "catch":
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                        default:
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                    }
+                });
+        </script>
+        {% else %}
+        <script>
+            swal({
+                icon: '/static/image/login_success.png',
+                text: '{{ message }}',
+                buttons: {
+                    cancel: "Cancel",
+                    catch: {
+                        text: "Done",
+                        value: "catch",
+                    }
+                },
+            })
+                .then((value) => {
+                    switch (value) {
+                        case "catch":
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                        default:
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                    }
+                });
+        </script>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
 
     {% endblock %}
 </body>

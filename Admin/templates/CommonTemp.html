@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+
 </head>
 <!-- handle a screen configration -->
 <style>
@@ -111,8 +114,8 @@
     <!-- sidebar with options -->
     <div class="sidebar">
         {% if department == 'Production' %}
-        <a class="active" href="#test" >Production </a>
-        <a href="#test" >Production </a>
+        <a class="active" href="{% url 'production_home' %}" >Home</a>
+        <a href="{% url 'production_user' 'show' %}" >Production User</a>
         {% else %}
         <a class="active" href="{% url 'openskroman' %}">HOME</a>
         <a href="{% url 'allUsers' %}">CREATE USER</a>

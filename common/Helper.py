@@ -27,3 +27,16 @@ def SendOTP(email,request, otp):
 def GetCurrentTime():
     localtime = time.asctime(time.localtime(time.time()))
     return localtime
+
+# get a random values here
+def GenerateRandom(max_length):
+    digits = "0123456789"
+    value = ""
+    for i in range(max_length):
+        value += digits[math.floor(random.random() * 10)]
+    return value
+
+# get alphnumerical values
+def GetAlphNumerical(max_length):
+    auth_token = ''.join(random.choice('0123456789ABCDEF') for i in range(max_length)) 
+    return auth_token

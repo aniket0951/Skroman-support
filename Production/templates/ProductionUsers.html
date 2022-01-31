@@ -1,0 +1,197 @@
+{% include 'CommonTemp.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production User</title>
+    <link rel="stylesheet" href="/static/css/bom.css">
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+
+    {% block content %}
+
+    <!-- add member button here -->
+    <div>
+        <form action="javascript:showAddMemberForm()" class="addMemberBtn" id="addMemberBtn">
+            <button type="Submit" class="btn btn-primary addMemberBtn">Add Member</button>
+        </form>
+    </div>
+
+    <!-- showing all production member list here  -->
+    <section class="parenttab" id="UsersData">
+        <div class="row child_tab">
+            <div class="col-lg-12 col-md-12">
+                <div class="topnav2">
+                    <a href="">Client Lead Data</a>
+                    <div class="search-container">
+                        <form action="/action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-content" style="margin-top: -10px;">
+                    <!-- Sales Department -->
+                    <div class="table_parent_div  tab-pane active" id="new">
+                        <div class="basic_info_card table_card" id="menu3">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">EMP ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Mobile</th>
+                                        <th scope="col">Designation</th>
+                                        <th scope="col">Department</th>
+                                        <th scope="col">Work</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in production_members %}
+                                    <tr>
+                                        <td>{{ i.emp_id }}</td>
+                                        <td>{{ i.emp_name}}</td>
+                                        <td>{{ i.emailId}}</td>
+                                        <td>{{ i.emp_contact}}</td>
+                                        <td>{{ i.designation}}</td>
+                                        <td>{{ i.department}}</td>
+                                        <td>{{ i.work_for}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- add a new member in production -->
+    <div class="card form_card" style="display: none;" id="addMemberForm">
+        <div class="card-body">
+            <h5 class="card-title">Add New Member in Production Department</h5>
+            <form action="{% url 'production_user' 'add' %}">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" class="form-control" name="emp_name" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Enter name" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Email</label>
+                    <input type="email" class="form-control" name="email" id="exampleInputPassword1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="text" class="form-control" name="password" id="exampleInputPassword1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Mobile</label>
+                    <input type="number" class="form-control" name="emp_contact" id="exampleInputPassword1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Designation</label>
+                    <input type="text" class="form-control" name="designation" id="exampleInputPassword1" required>
+                </div>
+
+                <!-- for which device -->
+                <div class="mb-3" id="dropDown2">
+                    <label for="pwd" class="form-label">Work Type:</label>
+                    <select id="list" class="form-select" name="work_for" aria-label="Default select example">
+                        <option value="Soldering">Soldering</option>
+                        <option value="Visual Inspection">Visual Inspection</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Testing">Testing</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Member</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- handling messages -->
+    <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "error"%}
+        <script>
+            swal({
+                icon: 'warning',
+                text: '{{ message }}',
+                buttons: {
+                    cancel: "Cancel",
+                    catch: {
+                        text: "Next",
+                        value: "catch",
+                    }
+                },
+            })
+                .then((value) => {
+                    switch (value) {
+                        case "catch":
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                        default:
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                    }
+                });
+        </script>
+        {% else %}
+        <script>
+            swal({
+                icon: '/static/image/login_success.png',
+                text: '{{ message }}',
+                buttons: {
+                    cancel: "Cancel",
+                    catch: {
+                        text: "Done",
+                        value: "catch",
+                    }
+                },
+            })
+                .then((value) => {
+                    switch (value) {
+                        case "catch":
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                        default:
+                            // window.location = "{% url 'testFuns' %}"
+                            break;
+                    }
+                });
+        </script>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- script -->
+    <script type="text/javascript">
+        function showAddMemberForm() {
+            var UsersData = document.getElementById('UsersData');
+            var addMemberForm = document.getElementById('addMemberForm');
+            var addMemberBtn = document.getElementById('addMemberBtn');
+
+            UsersData.style.display = 'none';
+            addMemberBtn.style.display = 'none';
+            addMemberForm.style.display = 'block';
+        }
+    </script>
+    {% endblock %}
+</body>
+
+</html>
