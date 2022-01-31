@@ -23,6 +23,7 @@
     color: white;
     float: right;
     margin-right: 15px;
+    font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
 
 }
@@ -50,4 +51,12 @@
 }
 .processedbtn:hover{
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* for Production screen */
+.addMemberBtn{
+    color: white;
+    float: right;
+    margin-top: 5px;
+    margin-right: 10px;
 }
