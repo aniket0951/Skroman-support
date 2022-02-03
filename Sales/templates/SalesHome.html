@@ -204,7 +204,7 @@
         <div class="container">
             <h4><b>{{ i.c_name }}</b></h4>
             {% if i.lead_status == '1' %}
-            <h4 style="float: right; margin-top: -33px; color: yellow;"><b>Present Lead</b></h4>
+            <h4 style="float: right; margin-top: -33px; color: black;"><b>Present Lead</b></h4>
             {% elif i.lead_status == '2' %}
             <h4 style="float: right; margin-top: -33px; color: green;"><b>Active Lead</b></h4>
             {% elif i.lead_status == '3' %}
@@ -298,12 +298,12 @@
                                     {% for i in client_data %}
                                     <tr>
                                         <th>{{ i.lead_id }}</th>
-                                        <td>{{ i.c_name }}</td>
+                                        <td>{{ i.c_name  }}</td>
                                         <td>{{ i.c_address }}</td>
                                         <td>{{ i.c_mobile }}</td>
                                         <td>{{ i.timestamp }}</td>
                                         {% if i.lead_status == '1' %}
-                                        <td style="color: yellow;"><strong>Present Lead</strong></td>
+                                        <td style="color: blac;"><strong>Present Lead</strong></td>
                                         {% elif i.lead_status == '2' %}
                                         <td style="color: green;"><strong>Active Lead</strong></td>
                                         {% elif i.lead_status == '3' %}
