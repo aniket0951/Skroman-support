@@ -13,4 +13,7 @@ urlpatterns = [
 
     # show all prodution user detial
     path('ProductionUser/<str:tag>/', ProductionUsers, name='production_user'),
+
+    # show daily task to all production members
+    path('DailyTasks/<str:auth_token>/', DailyTasks, name='daily_tasks'),
 ]

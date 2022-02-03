@@ -128,6 +128,9 @@ class WorkingCount(models.Model):
     auth_token = models.CharField(max_length=140, null=True, blank=True)
     working_date = models.CharField(max_length=140, null=True, blank=True)
     task_count = models.CharField(max_length=40, null=True, blank=True)
+    device_id = models.CharField(max_length=120, null=True, blank=True)
+    model = models.CharField(max_length=40, null=True, blank=True)
+    model_name = models.CharField(max_length=50, null=True, blank=True)
     class Meta:
         db_table = 'working_count'
 
@@ -138,6 +141,9 @@ class CurrentWorkingTasks(models.Model):
     task_id = models.CharField(max_length=140, null=True, blank=True)
     task_date = models.CharField(max_length=140, null=True, blank=True)
     task_status = models.CharField(max_length=10, null=True, blank=True)
+    device_id = models.CharField(max_length=120, null=True, blank=True)
+    model = models.CharField(max_length=40, null=True, blank=True)
+    model_name = models.CharField(max_length=50, null=True, blank=True)
     class Meta:
         db_table = 'current_working_task'
 
@@ -149,5 +155,16 @@ class CompletedTask(models.Model):
     task_date = models.CharField(max_length=140, null=True, blank=True)
     task_status = models.CharField(max_length=10, null=True, blank=True)
     task_time = models.CharField(max_length=140, null=True, blank=True)
+    device_id = models.CharField(max_length=120, null=True, blank=True)
+    model = models.CharField(max_length=40, null=True, blank=True)
+    model_name = models.CharField(max_length=50, null=True, blank=True)
     class Meta:
         db_table = 'completed_working_task'
+
+# component to work for soldering
+class SolderingWorkComponent(models.Model):
+    model = models.CharField(max_length=40, null=True, blank=True)
+    model_name = models.CharField(max_length=40, null=True, blank=True)
+    pcb_type = models.CharField(max_length=260, null=True, blank=True)
+    class Meta:
+        db_table = 'soldering_work_component'

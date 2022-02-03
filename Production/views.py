@@ -12,7 +12,6 @@ from Invantory.models import *
 from Invantory.InventorySerializers import *
 from common.Helper import *
 from .models import *
-from .ProductionSerializer import *
 from datetime import *
 
 # Create your views here.
@@ -99,8 +98,7 @@ def AssignInspection(request, device_id):
 
 # assing the work for device programing
 def AssignProgramming(request, device_id):
-    return JsonResponse("from Programming", safe=False)
-
+    return AssignAlgorithm(request, 'Programming', device_id)
 
 # assing the work for testing person
 def AssignTesting(request, device_id):
@@ -116,7 +114,19 @@ def AssignAlgorithm(request, work_for,device_id):
     currentdate = date.today()
     users = ProductionUser.objects.filter(work_for=work_for)
     user_ser = ProductionUserSer(users, many=True)
-    
+
+    # get device detail from production external details
+    device = ProductionExternalProcess.objects.filter(device_id=device_id)
+    device_ser = ProductionExternalSer(device, many=True)
+    model = ""
+    model_name = ""
+    if device:
+        model = device_ser.data[0]['model']
+        model_name = device_ser.data[0]['model_name']
+    else:
+        messages.error(request, "Failed to assign this task please try again after sometime")
+        return redirect('/productionUser/productionHome/')    
+
     # store first all auth_tokens here if need assign random task
     auth_tokens = []
     for i in user_ser.data:
@@ -136,7 +146,8 @@ def AssignAlgorithm(request, work_for,device_id):
             count_dict[token] = work_count_ser.data[0]['task_count']
                         
         else:
-            addWork = WorkingCount(auth_token=token, working_date=currentdate, task_count=1).save()
+            addWork = WorkingCount(auth_token=token, working_date=currentdate, task_count=1, device_id=device_id,
+                                   model=model, model_name=model_name).save()
             messages.success(request, "Soldering Assign Successfully")
             return redirect('/productionUser/productionHome/')
     
@@ -164,7 +175,8 @@ def AssignAlgorithm(request, work_for,device_id):
             task_id = GetAlphNumerical(10)
             currentTask = CurrentWorkingTasks(auth_token=i, task_name="Soldering",
                                               task_id=task_id,task_date=currentdate,
-                                              task_status=0).save()
+                                              task_status=0, device_id=device_id, model=model,
+                                              model_name=model_name).save()
             messages.success(request, f"{work_for} task assign to {name}")
             return redirect('/productionUser/productionHome/')                                  
 
@@ -191,17 +203,28 @@ def ProductionUsers(request, tag):
         department = 'Production'
         emp_status = 'Active'
         password = request.GET.get('password')
-
+        auth_token = request.GET.get('auth_token')
         number = GenerateRandom(4)
         emp_id = f"emp_{number}"
-        auth_token = GetAlphNumerical(52)
 
-        members = ProductionUser(emp_name=emp_name,emp_id=emp_id,
+        # check if auth token is empty then generate new token
+
+        if auth_token == 'empty':
+            auth_token = GetAlphNumerical(52)
+            members = ProductionUser(emp_name=emp_name,emp_id=emp_id,
                                  emailId=emailId,emp_contact=emp_contact,
                                  designation=designation,department=department,
                                  work_for=work_for,emp_status=emp_status,
                                  password=password, auth_token=auth_token).save()
+        else:
+            update_data = ProductionUser.objects.filter(auth_token=auth_token).update(emp_name=emp_name,emp_id=emp_id,
+                                 emailId=emailId,emp_contact=emp_contact,
+                                 designation=designation,department=department,
+                                 work_for=work_for,emp_status=emp_status,
+                                 password=password, auth_token=auth_token)
 
+        
+            
       
         messages.success(request, "New member add in production successfully")
         return redirect('/productionUser/ProductionUser/show/')
@@ -216,3 +239,25 @@ def ProductionUsers(request, tag):
         context['department'] = 'Production'
         context['production_members'] = productionSer.data
         return render(request, 'ProductionUsers.html', context)
+
+
+# get production members daily tasks
+def DailyTasks(request, auth_token):
+    tasks = CurrentWorkingTasks.objects.filter(auth_token=auth_token)
+
+    if tasks:
+        task_ser = CurrentWorkingTasksSer(tasks, many=True)
+        for i in task_ser.data:
+            model_name = i['model_name']
+            if model_name:
+                # get pcb type from model name
+                component = SolderingWorkComponent.objects.filter(model_name=model_name)
+                component_ser = SolderingWorkCompSer(component, many=True)
+                i['pcb_types'] = component_ser.data[0]['pcb_type']
+         
+        context = {
+            'daily_task' : task_ser.data
+        }
+        return render(request, 'ProductionMembersHome.html', context)
+    else:
+        return HttpResponse('Not a assign any task')    

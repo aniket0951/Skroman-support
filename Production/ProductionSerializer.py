@@ -32,3 +32,10 @@ class CompletedTaskSer(ModelSerializer):
     class Meta:
         model = CompletedTask
         fields = '__all__'
+
+
+# soldering component for work
+class SolderingWorkCompSer(ModelSerializer):
+    class Meta:
+        model = SolderingWorkComponent
+        fields = '__all__'

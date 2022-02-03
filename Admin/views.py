@@ -13,14 +13,20 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 import json
 from django.views.generic.list import ListView
+from Production.models import *
+from Production.ProductionSerializer import *
+from Production.views import *
 
 # Create your views here.
 def TestFun(request):
     loginStat = request.COOKIES.get('loginStatus')
     dep = request.COOKIES.get('department')
 
+    email = request.COOKIES.get('email')
+
+
     if loginStat == "Login" and IsValidParam(dep, request):
-        return navigateScreen(request, dep)
+        return navigateScreen(request, dep, email)
     else:
         return render(request, 'Login.html')
 
@@ -35,7 +41,9 @@ def LoginUser(request):
 
         # check user is register or not
         user = LoginModel.objects.filter(email=email, department=department)
-
+        if department == 'Production':
+            return navigateScreen(request, department, email)
+                
         if user:
             otp = generateOTP()
             if SendOTP(email, request, otp):
@@ -70,7 +78,7 @@ def VerifyOtp(request, otp):
     serializer = LoginSerializer(login, many=True)
     if login:
         dep = serializer.data[0]['department']
-        return navigateScreen(request, dep)
+        return navigateScreen(request, dep, email)
     else:
         return JsonResponse("User Authentication or otp verification failed", safe=False)
 
@@ -85,7 +93,7 @@ def generateOTP():
 
 
 # check the department and navigate the screen by dep
-def navigateScreen(request, department):
+def navigateScreen(request, department, email):
     if department == "Admin":
         response = render(request, 'MediaQ.html')
         response.set_cookie('loginStatus', "Login")
@@ -93,6 +101,24 @@ def navigateScreen(request, department):
         return response
     elif department == "Inventory":
         pass
+    elif department == 'Production':
+        production_user = ProductionUser.objects.filter(emailId=email, department=department)
+        production_ser = ProductionUserSer(production_user, many=True)
+        
+        work_for = production_ser.data[0]['work_for']
+        
+        if production_user:
+            if work_for == 'Admin':
+                return redirect('/productionUser/productionHome/')
+            else:
+                context = {
+                    'department': 'ProductionMembers',
+                    'auth_token':production_ser.data[0]['auth_token']
+                }
+                return DailyTasks(request,production_ser.data[0]['auth_token'])
+            
+        else:
+            return HttpResponse("Not a production user")    
 
 
 # all user list show and add new user
