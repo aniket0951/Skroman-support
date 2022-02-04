@@ -261,3 +261,7 @@ def DailyTasks(request, auth_token):
         return render(request, 'ProductionMembersHome.html', context)
     else:
         return HttpResponse('Not a assign any task')    
+
+def TestFunction(request):
+    time = request.GET.get('timer')
+    return HttpResponse(f"Test function run from view {time}")

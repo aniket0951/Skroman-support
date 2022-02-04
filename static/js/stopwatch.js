@@ -1,56 +1,72 @@
-var ss = document.getElementsByClassName('stopwatch');
+function timeToString(time) {
+  let diffInHrs = time / 3600000;
+  let hh = Math.floor(diffInHrs);
 
-[].forEach.call(ss, function (s) {
-    var currentTimer = 0,
-        interval = 0,
-        lastUpdateTime = new Date().getTime(),
-        start = s.querySelector('button.start'),
-        stop = s.querySelector('button.stop'),
-        reset = s.querySelector('button.reset'),
-        mins = s.querySelector('span.minutes'),
-        secs = s.querySelector('span.seconds'),
-        cents = s.querySelector('span.centiseconds');
+  let diffInMin = (diffInHrs - hh) * 60;
+  let mm = Math.floor(diffInMin);
 
-    start.addEventListener('click', startTimer);
-    stop.addEventListener('click', stopTimer);
-    reset.addEventListener('click', resetTimer);
+  let diffInSec = (diffInMin - mm) * 60;
+  let ss = Math.floor(diffInSec);
 
-    function pad (n) {
-        return ('00' + n).substr(-2);
-    }
+  let diffInMs = (diffInSec - ss) * 100;
+  let ms = Math.floor(diffInMs);
 
-    function update () {
-        var now = new Date().getTime(),
-            dt = now - lastUpdateTime;
+  let formattedMM = mm.toString().padStart(2, "0");
+  let formattedSS = ss.toString().padStart(2, "0");
+  let formattedMS = ms.toString().padStart(2, "0");
 
-        currentTimer += dt;
+  return `${formattedMM}:${formattedSS}:${formattedMS}`;
+}
 
-        var time = new Date(currentTimer);
+// Declare variables to use in our functions below
 
-        mins.innerHTML = pad(time.getMinutes());
-        secs.innerHTML = pad(time.getSeconds());
-        cents.innerHTML = pad(Math.floor(time.getMilliseconds() / 10));
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
 
-        lastUpdateTime = now;
-    }
+// Create function to modify innerHTML
 
-    function startTimer () {
-        if (!interval) {
-            lastUpdateTime = new Date().getTime();
-            interval = setInterval(update, 1);
-        }
-    }
+function print(txt) {
+  document.getElementById("display").innerHTML = txt;
+}
 
-    function stopTimer () {
-        clearInterval(interval);
-        interval = 0;
-    }
+// Create "start", "pause" and "reset" functions
 
-    function resetTimer () {
-        stopTimer();
+function start() {
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(function printTime() {
+    elapsedTime = Date.now() - startTime;
+    print(timeToString(elapsedTime));
+  }, 10);
+  showButton("PAUSE");
+}
 
-        currentTimer = 0;
+function pause() {
+  clearInterval(timerInterval);
+  showButton("PLAY");
+}
 
-        mins.innerHTML = secs.innerHTML = cents.innerHTML = pad(0);
-    }
-});
+function reset() {
+  clearInterval(timerInterval);
+  print("00:00:00");
+  elapsedTime = 0;
+  showButton("PLAY");
+}
+
+// Create function to display buttons
+
+function showButton(buttonKey) {
+  const buttonToShow = buttonKey === "PLAY" ? playButton : pauseButton;
+  const buttonToHide = buttonKey === "PLAY" ? pauseButton : playButton;
+  buttonToShow.style.display = "block";
+  buttonToHide.style.display = "none";
+}
+// Create event listeners
+
+let playButton = document.getElementById("playButton");
+let pauseButton = document.getElementById("pauseButton");
+let resetButton = document.getElementById("resetButton");
+
+playButton.addEventListener("click", start);
+pauseButton.addEventListener("click", pause);
+resetButton.addEventListener("click", reset);

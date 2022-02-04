@@ -1,74 +1,111 @@
-.parenttab{
-    border: white;
+.parenttab {
+  border: white;
 }
-.active{
-    background-color: white;
+.active {
+  background-color: white;
 }
-
+h5 {
+  font-family: "Roboto Mono", monospace;
+  font-weight: bold;
+}
 
 /* for bom verification screen */
-.form_card{
-    width: 80%;
-    margin-left: 220px;
-    margin-top: 30px;
+.form_card {
+  width: 80%;
+  margin-left: 220px;
+  margin-top: 30px;
 }
-.form-group{
-    padding: 5px;
+.form-group {
+  padding: 5px;
 }
-.parenttab{
-    margin-top: 70px;
+.parenttab {
+  margin-top: 70px;
 }
-.verifybtn{
-    background-color: orange;
-    color: white;
-    float: right;
-    margin-right: 15px;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
-
+.verifybtn {
+  background-color: orange;
+  color: white;
+  float: right;
+  margin-right: 15px;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
 }
-.verifybtn:hover{
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+.verifybtn:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
 }
-.verifiedbtn{
-    background-color: green;
-    color: white;
-    float: right;
-    margin-right: 15px;
-    font-family: 'Courier New', Courier, monospace;
+.verifiedbtn {
+  background-color: green;
+  color: white;
+  float: right;
+  margin-right: 15px;
+  font-family: "Courier New", Courier, monospace;
 }
-.verifiedbtn:hover{
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+.verifiedbtn:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
 }
-.processedbtn{
-    text-decoration: none; 
-    color: white;
-    float: right;
-    width: 15%;
-    margin-right: 15px;
-    background-color: skyblue;
-    font-family: 'Courier New', Courier, monospace;
+.processedbtn {
+  text-decoration: none;
+  color: white;
+  float: right;
+  width: 15%;
+  margin-right: 15px;
+  background-color: skyblue;
+  font-family: "Courier New", Courier, monospace;
 }
-.processedbtn:hover{
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+.processedbtn:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* for Production screen */
-.addMemberBtn{
-    color: white;
-    float: right;
-    margin-top: 5px;
-    margin-right: 10px;
+.addMemberBtn {
+  color: white;
+  float: right;
+  margin-top: 5px;
+  margin-right: 10px;
 }
-.workcontainer{
-    margin-left: 180px;
-    margin-right: 50px;
-    margin-top: 120px;
+.workcontainer {
+  margin-left: 180px;
+  margin-right: 50px;
+  margin-top: 120px;
 }
-.check_boxs{
-    padding: 10px;
+.check_boxs {
+  padding: 10px;
 }
-.check_boxs input{
-    width: 15px;
-    height: 15px;
+.check_boxs input {
+  width: 15px;
+  height: 15px;
+}
+
+/* for stop watch */
+.stopwatch {
+  display: grid;
+  justify-items: center;
+  grid-row-gap: 23px;
+  width: 100%;
+}
+.time {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 200;
+  font-size: 25px;
+}
+.controls {
+  display: flex;
+  justify-content: space-between;
+  width: 187px;
+}
+
+button {
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+  border: none;
+  margin: 0;
+  outline: none;
+}
+
+#playButton {
+  display: block;
+}
+
+#pauseButton {
+  display: none;
 }
